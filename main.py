@@ -120,15 +120,22 @@ def salvar_historico(historico, links_usados, artigos):
 
 
 # ---------------------------------------------------------------- coleta
+# (fonte, url, janela em horas, tipo). "noticia" = a nata do dia; "case" = negócios e empresas usando IA,
+# que não envelhece rápido e entra quando o dia tem pouca notícia forte.
 FEEDS = [
-    ("OpenAI", "https://openai.com/news/rss.xml"),
-    ("Google DeepMind", "https://deepmind.google/blog/rss.xml"),
-    ("Hugging Face", "https://huggingface.co/blog/feed.xml"),
-    ("MIT Tech Review", "https://www.technologyreview.com/topic/artificial-intelligence/feed/"),
-    ("Ars Technica", "https://feeds.arstechnica.com/arstechnica/index"),
-    ("The Verge", "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml"),
-    ("TechCrunch", "https://techcrunch.com/category/artificial-intelligence/feed/"),
-    ("Wired", "https://www.wired.com/feed/tag/ai/latest/rss"),
+    ("OpenAI", "https://openai.com/news/rss.xml", JANELA_HORAS, "noticia"),
+    ("Google DeepMind", "https://deepmind.google/blog/rss.xml", JANELA_HORAS, "noticia"),
+    ("Google AI", "https://blog.google/technology/ai/rss/", JANELA_HORAS, "noticia"),
+    ("Hugging Face", "https://huggingface.co/blog/feed.xml", JANELA_HORAS, "noticia"),
+    ("MIT Tech Review", "https://www.technologyreview.com/topic/artificial-intelligence/feed/", JANELA_HORAS, "noticia"),
+    ("Ars Technica", "https://feeds.arstechnica.com/arstechnica/index", JANELA_HORAS, "noticia"),
+    ("The Verge", "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml", JANELA_HORAS, "noticia"),
+    ("TechCrunch", "https://techcrunch.com/category/artificial-intelligence/feed/", JANELA_HORAS, "noticia"),
+    ("Wired", "https://www.wired.com/feed/tag/ai/latest/rss", JANELA_HORAS, "noticia"),
+    ("The Decoder", "https://the-decoder.com/feed/", JANELA_HORAS, "noticia"),
+    ("VentureBeat", "https://venturebeat.com/category/ai/feed/", 7 * 24, "case"),
+    ("AI Business", "https://aibusiness.com/rss.xml", 7 * 24, "case"),
+    ("NVIDIA Blog", "https://blogs.nvidia.com/feed/", 7 * 24, "case"),
 ]
 ATOM = "{http://www.w3.org/2005/Atom}"
 
@@ -152,7 +159,7 @@ def data_do_item(item):
 def coletar_noticias(links_enviados):
     artigos = []
     agora = datetime.datetime.now(datetime.timezone.utc)
-    for fonte, url in FEEDS:
+    for fonte, url, janela, tipo in FEEDS:
         try:
             r = requests.get(url, headers=HEADERS, timeout=12)
             if r.status_code != 200:
@@ -170,11 +177,11 @@ def coletar_noticias(links_enviados):
                 link = ((l.text or "").strip() or l.attrib.get("href", "")) if l is not None else ""
                 resumo = BeautifulSoup(d.text, "html.parser").get_text(strip=True)[:250] if d is not None and d.text else ""
                 dt = data_do_item(item)
-                if dt and (agora - dt).total_seconds() > JANELA_HORAS * 3600:
+                if dt and (agora - dt).total_seconds() > janela * 3600:
                     continue
                 if not titulo or normalizar_link(link) in links_enviados:
                     continue
-                artigos.append({"fonte": fonte, "titulo": titulo, "link": link, "resumo": resumo})
+                artigos.append({"fonte": fonte, "titulo": titulo, "link": link, "resumo": resumo, "tipo": tipo})
                 count += 1
         except Exception as e:
             print(f"Erro ao coletar {fonte}: {e}")
@@ -191,7 +198,7 @@ def coletar_noticias(links_enviados):
                     link = "https://www.anthropic.com" + href if href.startswith("/") else href
                     if len(texto) > 15 and normalizar_link(link) not in links_enviados:
                         artigos.append({"fonte": "Anthropic", "titulo": texto[:120], "link": link,
-                                        "resumo": "Novidade oficial da Anthropic."})
+                                        "resumo": "Novidade oficial da Anthropic.", "tipo": "noticia"})
                         count += 1
                         if count >= 3:
                             break
@@ -247,29 +254,48 @@ def chamar_llm_json(prompt):
 def gerar_episodio(artigos, historico, numero):
     hoje = agora_brt()
     data_falada = f"{hoje.day} de {['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'][hoje.month-1]}"
-    ja = "\n".join(f"- {i['titulo']}" for i in historico[-40:]) or "(nenhum)"
-    dados = "\n\n".join(f"Fonte: {a['fonte']}\nTítulo: {a['titulo']}\nLink: {a['link']}\nPrévia: {a['resumo']}" for a in artigos[:45])
+    ja = "\n".join(f"- {i['titulo']}" for i in historico) or "(nenhum)"
+
+    def bloco(tipo, limite):
+        sel = [a for a in artigos if a.get("tipo") == tipo][:limite]
+        return "\n\n".join(f"Fonte: {a['fonte']}\nTítulo: {a['titulo']}\nLink: {a['link']}\nPrévia: {a['resumo']}" for a in sel) or "(nenhum)"
+    dados = bloco("noticia", 45)
+    cases = bloco("case", 25)
 
     prompt = f"""Você é o roteirista e apresentador do "Café com Tokens", podcast diário em português do Brasil sobre inteligência artificial.
 Hoje é {data_falada} de {hoje.year}. Este é o episódio {numero}.
 
 OUVINTE: qualquer pessoa curiosa por IA, de quem cria produtos e automações a quem só quer entender o que está acontecendo. Não é leigo total, mas não precisa saber jargão. Nunca chame o ouvinte pelo nome.
 
-OBJETIVO: o ouvinte termina o episódio entendendo de verdade o que aconteceu, como a tecnologia funciona por baixo do capô e por que isso importa no mundo real.
-TOM: divertido, inteligente, espirituoso e empolgante. Zero linguagem corporativa. Um amigo apaixonado por tecnologia trocando uma ideia boa, com analogias vivas do cotidiano.
+OBJETIVO: o ouvinte termina o episódio entendendo de verdade o que aconteceu, o que isso significa em linguagem simples e por que isso importa no mundo real.
+TOM (o mais importante: é o começo do dia de quem ouve): leve, engraçado, informal e gostoso de ouvir, como um amigo bem-humorado contando as novidades no café da manhã. Piadas rápidas, comentários espirituosos, ironia leve, referências do dia a dia brasileiro. Nada pesado nem de palestra: se um trecho soar técnico demais, alivie com humor. Zero linguagem corporativa. Inteligente sem ser chato; a informação continua precisa.
 
-NOTÍCIAS COLETADAS NAS FONTES (OpenAI, DeepMind, Anthropic, Hugging Face, MIT Tech Review, Wired, Ars Technica, The Verge, TechCrunch):
+NOTÍCIAS DAS ÚLTIMAS 48 HORAS (OpenAI, Google, DeepMind, Anthropic, Hugging Face, MIT Tech Review, Wired, Ars Technica, The Verge, TechCrunch, The Decoder):
 {dados}
 
-JÁ CONTADAS NOS ÚLTIMOS DIAS (PROIBIDO REPETIR, nem com outro título ou outra fonte):
+CASES E NEGÓCIOS DA SEMANA (empresas usando IA de verdade, resultados, mercado):
+{cases}
+
+JÁ CONTADAS NOS ÚLTIMOS 30 DIAS: PROIBIDO REPETIR, JAMAIS. Nem com outro título, outra fonte ou outro ângulo; nem uma "atualização" do mesmo fato, a não ser que seja um fato novo e grande:
 {ja}
 
-SELEÇÃO: filtre impiedosamente e fique só com a nata. NÃO existe número fixo: entram TODAS as notícias realmente relevantes do mundo da IA hoje (modelos novos, movimentos grandes de mercado, avanços técnicos reais, regulação que muda o jogo) e NENHUMA de enchimento. Dia fraco pode ter 1 só. Critério: "quem acompanha IA perderia algo importante se não soubesse disso hoje?". Nunca duas notícias sobre o mesmo fato. Ordene da mais impactante para a menos.
-DURAÇÃO: livre. Pode dar 4 ou 12 minutos, desde que cada frase valha a pena. Sem encher linguiça.
+SELEÇÃO:
+1. Primeiro a nata da IA: entram TODAS as notícias realmente relevantes de hoje (modelos novos, movimentos grandes de mercado, avanços técnicos reais, regulação que muda o jogo) e NENHUMA de enchimento. Critério: "quem acompanha IA perderia algo importante se não soubesse disso hoje?". Nunca duas sobre o mesmo fato. Ordene da mais impactante para a menos.
+2. Se a nata não sustentar o episódio (dia fraco), abra um pouco o campo, sempre começando por uma notícia de IA: traga 1 ou 2 itens da lista de CASES, contando como uma empresa real está usando IA, o que ela fez, o resultado e o que outros negócios podem copiar. Use só o que está nas listas; nunca invente empresa, número ou resultado.
+3. Dia cheio de notícia forte: não precisa de case.
+DURAÇÃO: o episódio tem de 8 a 10 minutos falados, o tempo de chegar no trabalho. Isso dá entre 1.500 e 1.700 palavras no roteiro (uns 9.000 caracteres): confira antes de responder.
+- Você monta a programação do dia (ordem, ritmo, quanto tempo cada assunto ganha). As notícias principais ganham de 1 minuto e meio a 2 minutos (uns 250 a 320 palavras): contexto (de onde isso vem, quem são os envolvidos), o fato com números concretos, o que muda na prática para quem usa ou cria com IA e uma opinião ou provocação para o ouvinte pensar.
+
+QUADRO "SIMPLIFICANDO A VIDA" (marca registrada do programa, com humor):
+- Quando uma notícia trouxer uma ideia complexa ou técnica, depois de contar o fato o apresentador chama o quadro com uma frase divertida, variando a cada vez, por exemplo "Tá, tudo muito bonito, mas vamos simplificar a vida?" ou "Agora, simplificando a vida:" ou "Traduzindo para simplificar a vida:", e explica de forma simples, com uma analogia do cotidiano, o que aquilo é e o que mudou de verdade. O ouvinte aprende que, quando vem a parte técnica, logo depois vem o momento de digerir.
+- Use só nas notícias que precisam (em geral 1 a 3 por episódio), nunca em todas.
+- O ouvinte já tem um conhecimento razoável de IA: NUNCA explique o básico (o que é token, o que é LLM, o que é um modelo). Simplifique a ideia nova e o impacto dela, não o vocabulário de sempre.
+- Dia com poucas notícias relevantes: NÃO invente nem encha com notícia fraca. Use os cases e aprofunde as que existem (história, concorrentes, o que vem a seguir, exemplos práticos de uso) até chegar aos 8 minutos.
+- Profundidade não é enrolação: nada de repetir a mesma ideia com outras palavras.
 
 ROTEIRO FALADO:
 - Abertura curta e animada: "Bom dia!" (sem nome), diga que é o Café com Tokens de {data_falada}, e dê uma prévia rápida do que vem.
-- Corpo: conte cada notícia de forma fluida e conversada: o que rolou (com dados concretos), como funciona por baixo do capô (com uma analogia simples) e o que isso mexe no jogo. Sem ler rótulos ("número 1", "o que rolou:"). Transições naturais de apresentador.
+- Corpo: conte cada notícia de forma fluida e conversada: o que rolou (com dados concretos), o "Simplificando a vida" quando fizer sentido e o que isso mexe no jogo. Sem ler rótulos ("número 1", "o que rolou:") e sem a expressão "por baixo do capô". Transições naturais de apresentador.
 - Encerramento redondo: por hoje é isso, os links de todas as notícias estão na descrição do episódio, convide a seguir o Café com Tokens para receber o próximo amanhã cedo, e se despeça até amanhã.
 - Texto puro para sintetizador de voz: sem emojis, sem marcações de palco ("[pausa]", "Locutor:"), sem asteriscos, sem travessão. Números fáceis de falar. Parágrafos separados por linha em branco.
 
@@ -288,6 +314,26 @@ REGRA DO TÍTULO (é o que faz alguém clicar no Spotify e achar o episódio na 
 
 Regra geral: nunca use travessão (—). Use vírgula, dois-pontos ou hífen."""
     ep = chamar_llm_json(prompt)
+    # Trava de duração: ~16 caracteres por segundo narrado; abaixo de 8.000 dá menos de 8 minutos.
+    # Se vier curto, manda o próprio roteiro de volta para EXPANDIR (reescrever do zero sai curto de novo).
+    for _ in range(2):
+        tam = len(ep.get("roteiro", ""))
+        if tam >= 8000:
+            break
+        print(f"Roteiro curto ({tam} caracteres, uns {tam // 960} min): pedindo para expandir...")
+        try:
+            maior = chamar_llm_json(
+                prompt + "\n\nVOCÊ JÁ ESCREVEU ESTA VERSÃO, MAS ELA FICOU CURTA "
+                f"({len(ep['roteiro'].split())} palavras, uns {tam // 960} minutos):\n"
+                + json.dumps(ep, ensure_ascii=False)
+                + "\n\nDevolva o mesmo JSON com o roteiro EXPANDIDO para 1.600 a 1.800 palavras: mantenha o que está bom e acrescente, "
+                "em cada notícia, mais contexto, um 'Simplificando a vida' onde couber, exemplos práticos, uma piada ou comentário espirituoso "
+                "e uma provocação final. Se ainda faltar, inclua um case da lista. Sem repetir ideias.")
+            if len(maior.get("roteiro", "")) > tam:
+                ep = maior
+        except Exception as e:
+            print(f"Expansão falhou: {e}")
+            break
     for campo in ("titulo", "resumo", "noticias", "roteiro"):
         if not ep.get(campo):
             raise RuntimeError(f"Resposta sem o campo {campo}")
