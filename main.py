@@ -275,11 +275,17 @@ ROTEIRO FALADO:
 
 RESPONDA SÓ COM JSON, neste formato:
 {{
- "titulo": "título do episódio, até 70 caracteres, instigante, com o assunto principal do dia (sem data e sem número)",
+ "titulo": "título do episódio (sem data e sem número, o número entra sozinho), seguindo a REGRA DO TÍTULO abaixo",
  "resumo": "1 a 2 frases que vendem o episódio, para a descrição no Spotify",
  "noticias": [{{"titulo": "título curto em português", "fonte": "nome da fonte", "link": "link exato da lista acima"}}],
  "roteiro": "o texto falado completo"
 }}
+REGRA DO TÍTULO (é o que faz alguém clicar no Spotify e achar o episódio na busca):
+- Até 65 caracteres. Comece pelo nome que as pessoas buscam: a empresa ou o produto mais famoso do dia (ChatGPT, OpenAI, Google, Gemini, Claude, Anthropic, Nvidia, Meta, Apple...).
+- Chamativo de verdade: provoque curiosidade, conflito, número forte ou consequência ("Por que...", "acabou de...", "ninguém esperava", "vai mudar", "US$ 50 bilhões"). Pode apelar para a emoção, sem mentir nem inventar.
+- Se couber, puxe a 2ª notícia mais forte com "e" ou vírgula.
+- Exemplos do tom: "ChatGPT agora faz compras sozinho, e o varejo entrou em pânico" / "Anthropic vai pra bolsa: quanto vale o Claude?" / "Nvidia em crise: quem vai mandar no chip da IA?"
+
 Regra geral: nunca use travessão (—). Use vírgula, dois-pontos ou hífen."""
     ep = chamar_llm_json(prompt)
     for campo in ("titulo", "resumo", "noticias", "roteiro"):
@@ -402,7 +408,7 @@ def montar_feed(episodios):
     itens = []
     for ep in sorted(episodios, key=lambda e: e["numero"], reverse=True):
         itens.append(f"""    <item>
-      <title>{escape(ep['titulo'])}</title>
+      <title>#{ep['numero']} | {escape(ep['titulo'])}</title>
       <description><![CDATA[{ep['descricao_html']}]]></description>
       <content:encoded><![CDATA[{ep['descricao_html']}]]></content:encoded>
       <enclosure url="{escape(ep['url'])}" length="{ep['bytes']}" type="audio/mpeg"/>
