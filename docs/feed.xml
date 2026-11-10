@@ -11,7 +11,7 @@
     <itunes:author>Marco Luty</itunes:author>
     <itunes:owner>
       <itunes:name>Marco Luty</itunes:name>
-      <itunes:email>PENDENTE@gmail.com</itunes:email>
+      <itunes:email>cafecomtokens.podcast@gmail.com</itunes:email>
     </itunes:owner>
     <itunes:image href="https://mrcluty.github.io/cafe-com-tokens/capa.jpg"/>
     <image><url>https://mrcluty.github.io/cafe-com-tokens/capa.jpg</url><title>Café com Tokens</title><link>https://mrcluty.github.io/cafe-com-tokens/</link></image>
@@ -19,7 +19,7 @@
     <itunes:category text="News"><itunes:category text="Tech News"/></itunes:category>
     <itunes:explicit>false</itunes:explicit>
     <itunes:type>episodic</itunes:type>
-    <lastBuildDate>Tue, 10 Nov 2026 17:03:11 -0300</lastBuildDate>
+    <lastBuildDate>Tue, 10 Nov 2026 17:08:39 -0300</lastBuildDate>
 
   </channel>
 </rss>

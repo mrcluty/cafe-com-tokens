@@ -25,7 +25,7 @@ import requests
 from bs4 import BeautifulSoup
 
 BASE = os.path.dirname(os.path.abspath(__file__))
-CONFIG = json.load(open(os.path.join(BASE, "config.json"), encoding="utf-8"))
+CONFIG = json.load(open(os.path.join(BASE, "config.json"), encoding="utf-8-sig"))
 HISTORICO_PATH = os.path.join(BASE, "historico.json")
 EPISODIOS_PATH = os.path.join(BASE, "episodios.json")
 ULTIMO_PATH = os.path.join(BASE, "ultimo_episodio.txt")
