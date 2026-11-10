@@ -1,1 +1,27 @@
-[]
+[
+ {
+  "data": "2026-11-10",
+  "link": "https://openai.com/index/introducing-businesses-chatgpt",
+  "titulo": "Introducing Businesses in ChatGPT"
+ },
+ {
+  "data": "2026-11-10",
+  "link": "https://deepmind.google/blog/gemini-4-carbon-is-now-available",
+  "titulo": "Gemini 4 Carbon is now available"
+ },
+ {
+  "data": "2026-11-10",
+  "link": "https://deepmind.google/blog/introducing-alphaproof-code",
+  "titulo": "Introducing AlphaProof Code: a breakthrough in verifying complex software at depth"
+ },
+ {
+  "data": "2026-11-10",
+  "link": "https://techcrunch.com/2026/11/10/anthropic-launches-claude-meetings-to-turn-workplace-discussions-into-plans-and-tasks",
+  "titulo": "Anthropic launches Claude Meetings to turn workplace discussions into plans and tasks"
+ },
+ {
+  "data": "2026-11-10",
+  "link": "https://www.anthropic.com/news/s1-sec",
+  "titulo": "Anthropic files S-1 with the SEC for proposed initial public offering Today, Anthropic, PBC filed a registration stateme"
+ }
+]

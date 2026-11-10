@@ -1,1 +1,43 @@
-[]
+[
+ {
+  "numero": 1,
+  "data": "2026-11-10",
+  "titulo": "Anthropic abre capital e a IA que prova que softwares são seguros",
+  "resumo": "Neste episódio de estreia, mergulhamos no IPO bilionário da Anthropic, o avanço matemático da DeepMind que protege suas mensagens e a nova cara comercial do ChatGPT.",
+  "noticias": [
+   {
+    "titulo": "Anthropic entra com pedido de IPO",
+    "fonte": "Anthropic",
+    "link": "https://www.anthropic.com/news/s1-sec"
+   },
+   {
+    "titulo": "AlphaProof Code verifica segurança do Signal",
+    "fonte": "Google DeepMind",
+    "link": "https://deepmind.google/blog/introducing-alphaproof-code/"
+   },
+   {
+    "titulo": "OpenAI lança perfis de empresas no ChatGPT",
+    "fonte": "OpenAI",
+    "link": "https://openai.com/index/introducing-businesses-chatgpt"
+   },
+   {
+    "titulo": "Claude Meetings transforma reuniões em tarefas",
+    "fonte": "TechCrunch",
+    "link": "https://techcrunch.com/2026/11/10/anthropic-launches-claude-meetings-to-turn-workplace-discussions-into-plans-and-tasks/"
+   },
+   {
+    "titulo": "Lançamento do Gemini 4 Carbon",
+    "fonte": "Google DeepMind",
+    "link": "https://deepmind.google/blog/gemini-4-carbon-is-now-available/"
+   }
+  ],
+  "descricao_html": "<p>Neste episódio de estreia, mergulhamos no IPO bilionário da Anthropic, o avanço matemático da DeepMind que protege suas mensagens e a nova cara comercial do ChatGPT.</p><p><strong>As notícias de hoje:</strong></p><ul><li><a href=\"https://www.anthropic.com/news/s1-sec\">Anthropic entra com pedido de IPO</a> (Anthropic)</li><li><a href=\"https://deepmind.google/blog/introducing-alphaproof-code/\">AlphaProof Code verifica segurança do Signal</a> (Google DeepMind)</li><li><a href=\"https://openai.com/index/introducing-businesses-chatgpt\">OpenAI lança perfis de empresas no ChatGPT</a> (OpenAI)</li><li><a href=\"https://techcrunch.com/2026/11/10/anthropic-launches-claude-meetings-to-turn-workplace-discussions-into-plans-and-tasks/\">Claude Meetings transforma reuniões em tarefas</a> (TechCrunch)</li><li><a href=\"https://deepmind.google/blog/gemini-4-carbon-is-now-available/\">Lançamento do Gemini 4 Carbon</a> (Google DeepMind)</li></ul><p>Café com Tokens: IA todo dia, direto ao ponto. Episódio novo toda manhã.</p>",
+  "arquivo": "cafe-com-tokens-2026-11-10.mp3",
+  "tag": "ep0001",
+  "url": "https://github.com/mrcluty/cafe-com-tokens/releases/download/ep0001/cafe-com-tokens-2026-11-10.mp3",
+  "bytes": 2326927,
+  "duracao": 193,
+  "guid": "cafe-com-tokens-ep0001",
+  "pub_date": "Tue, 10 Nov 2026 17:15:07 -0300"
+ }
+]
