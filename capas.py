@@ -143,18 +143,18 @@ def capa_episodio(numero, data_iso, lado=3000):
     l_nome = largura(nome, f_marca, -0.02)
     gap = s * 0.35
     total = s + gap + l_nome
-    y_m = W * 0.265
+    y_m = W * 0.25
     desenhar_simbolo(d, cx - total / 2, y_m + h_m - s, s)
     texto_centro(d, cx - total / 2 + s + gap + l_nome / 2, y_m, nome, f_marca, TINTA, -0.02)
     # número: maior possível dentro de 80% da largura
     num = str(numero)
-    px = W * 0.42
+    px = W * 0.40
     while True:
         f_num = fonte("Bold", px)
         f_hash = fonte("Bold", px * 0.42)
         lh = largura("#", f_hash, 0) + px * 0.05
         ln = largura(num, f_num, -0.05)
-        if lh + ln <= W * 0.80:
+        if lh + ln <= W * 0.70:
             break
         px *= 0.95
     h_num = altura_caps(f_num)
@@ -165,7 +165,7 @@ def capa_episodio(numero, data_iso, lado=3000):
     texto_centro(d, x0 + lh + ln / 2, topo, num, f_num, TINTA, -0.05)
     # data
     f_data = fonte("Medium", W * 0.036)
-    texto_centro(d, cx, W * 0.735 - altura_caps(f_data), data_curta(data_iso), f_data, CINZA, 0)
+    texto_centro(d, cx, W * 0.75 - altura_caps(f_data), data_curta(data_iso), f_data, CINZA, 0)
     return finalizar(img, lado)
 
 

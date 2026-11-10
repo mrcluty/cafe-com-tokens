@@ -466,7 +466,7 @@ def garantir_capa(ep):
         os.makedirs(CAPAS_DIR, exist_ok=True)
         capas.salvar_jpg(capas.capa_episodio(ep["numero"], ep["data"]), caminho)
         print(f"Capa do episódio: {caminho}")
-    return f"capas/{ep['tag']}.jpg?v=2"  # ?v= muda quando o desenho mudar (fura o cache do Spotify)
+    return f"capas/{ep['tag']}.jpg?v=3"  # ?v= muda quando o desenho mudar (fura o cache do Spotify)
 
 
 def montar_feed(episodios):
