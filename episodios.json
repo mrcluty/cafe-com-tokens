@@ -2,41 +2,46 @@
  {
   "numero": 1,
   "data": "2026-11-10",
-  "titulo": "Anthropic vai pra bolsa: quanto vale o Claude?",
-  "resumo": "Neste episódio de estreia, mergulhamos no IPO bilionário da Anthropic, o avanço matemático da DeepMind que protege suas mensagens e a nova cara comercial do ChatGPT.",
+  "titulo": "Anthropic vai para a bolsa e Gemini 4 Carbon atropela a concorrência",
+  "resumo": "A Anthropic oficializa seu IPO bilionário enquanto o Google lança o Gemini 4 Carbon e a OpenAI transforma o ChatGPT em um diretório de empresas.",
   "noticias": [
    {
-    "titulo": "Anthropic entra com pedido de IPO",
+    "titulo": "Anthropic entra com pedido de IPO e fundadores ficam bilionários",
     "fonte": "Anthropic",
     "link": "https://www.anthropic.com/news/s1-sec"
    },
    {
-    "titulo": "AlphaProof Code verifica segurança do Signal",
-    "fonte": "Google DeepMind",
-    "link": "https://deepmind.google/blog/introducing-alphaproof-code/"
+    "titulo": "Google lança Gemini 4 Carbon com recorde de custo-benefício",
+    "fonte": "The Decoder",
+    "link": "https://the-decoder.com/gemini-4-carbon-arrives-just-in-time-to-feel-like-yesterdays-news-in-the-fastest-model-cycle-yet/"
    },
    {
-    "titulo": "OpenAI lança perfis de empresas no ChatGPT",
+    "titulo": "ChatGPT ganha perfis de empresas e agentes de atendimento",
     "fonte": "OpenAI",
     "link": "https://openai.com/index/introducing-businesses-chatgpt"
    },
    {
-    "titulo": "Claude Meetings transforma reuniões em tarefas",
-    "fonte": "TechCrunch",
-    "link": "https://techcrunch.com/2026/11/10/anthropic-launches-claude-meetings-to-turn-workplace-discussions-into-plans-and-tasks/"
+    "titulo": "Claude agora tem suíte de escritório e entra em reuniões",
+    "fonte": "The Verge",
+    "link": "https://www.theverge.com/ai-artificial-intelligence/1030709/anthropic-has-its-own-ai-powered-office-suite-now"
    },
    {
-    "titulo": "Lançamento do Gemini 4 Carbon",
-    "fonte": "Google DeepMind",
-    "link": "https://deepmind.google/blog/gemini-4-carbon-is-now-available/"
+    "titulo": "DeepMind prova segurança do Signal e coloca robôs na Mercedes",
+    "fonte": "Wired",
+    "link": "https://www.wired.com/story/a-new-ai-tool-from-google-deepmind-formally-verified-the-signal-protocol/"
+   },
+   {
+    "titulo": "IA muda o jogo para freelancers segundo OpenAI e Upwork",
+    "fonte": "OpenAI",
+    "link": "https://openai.com/index/ai-effect-on-freelance-work"
    }
   ],
-  "descricao_html": "<p>Neste episódio de estreia, mergulhamos no IPO bilionário da Anthropic, o avanço matemático da DeepMind que protege suas mensagens e a nova cara comercial do ChatGPT.</p><p><strong>As notícias de hoje:</strong></p><ul><li><a href=\"https://www.anthropic.com/news/s1-sec\">Anthropic entra com pedido de IPO</a> (Anthropic)</li><li><a href=\"https://deepmind.google/blog/introducing-alphaproof-code/\">AlphaProof Code verifica segurança do Signal</a> (Google DeepMind)</li><li><a href=\"https://openai.com/index/introducing-businesses-chatgpt\">OpenAI lança perfis de empresas no ChatGPT</a> (OpenAI)</li><li><a href=\"https://techcrunch.com/2026/11/10/anthropic-launches-claude-meetings-to-turn-workplace-discussions-into-plans-and-tasks/\">Claude Meetings transforma reuniões em tarefas</a> (TechCrunch)</li><li><a href=\"https://deepmind.google/blog/gemini-4-carbon-is-now-available/\">Lançamento do Gemini 4 Carbon</a> (Google DeepMind)</li></ul><p>Café com Tokens: IA todo dia, direto ao ponto. Episódio novo toda manhã.</p>",
-  "arquivo": "cafe-com-tokens-2026-11-10.mp3",
+  "descricao_html": "<p>A Anthropic oficializa seu IPO bilionário enquanto o Google lança o Gemini 4 Carbon e a OpenAI transforma o ChatGPT em um diretório de empresas.</p><p><strong>As notícias de hoje:</strong></p><ul><li><a href=\"https://www.anthropic.com/news/s1-sec\">Anthropic entra com pedido de IPO e fundadores ficam bilionários</a> (Anthropic)</li><li><a href=\"https://the-decoder.com/gemini-4-carbon-arrives-just-in-time-to-feel-like-yesterdays-news-in-the-fastest-model-cycle-yet/\">Google lança Gemini 4 Carbon com recorde de custo-benefício</a> (The Decoder)</li><li><a href=\"https://openai.com/index/introducing-businesses-chatgpt\">ChatGPT ganha perfis de empresas e agentes de atendimento</a> (OpenAI)</li><li><a href=\"https://www.theverge.com/ai-artificial-intelligence/1030709/anthropic-has-its-own-ai-powered-office-suite-now\">Claude agora tem suíte de escritório e entra em reuniões</a> (The Verge)</li><li><a href=\"https://www.wired.com/story/a-new-ai-tool-from-google-deepmind-formally-verified-the-signal-protocol/\">DeepMind prova segurança do Signal e coloca robôs na Mercedes</a> (Wired)</li><li><a href=\"https://openai.com/index/ai-effect-on-freelance-work\">IA muda o jogo para freelancers segundo OpenAI e Upwork</a> (OpenAI)</li></ul><p>Café com Tokens: IA todo dia, direto ao ponto. Episódio novo toda manhã.</p>",
+  "arquivo": "cafe-com-tokens-2026-11-10-v2.mp3",
   "tag": "ep0001",
-  "url": "https://github.com/mrcluty/cafe-com-tokens/releases/download/ep0001/cafe-com-tokens-2026-11-10.mp3",
-  "bytes": 2326927,
-  "duracao": 193,
+  "url": "https://github.com/mrcluty/cafe-com-tokens/releases/download/ep0001/cafe-com-tokens-2026-11-10-v2.mp3",
+  "bytes": 6499831,
+  "duracao": 541,
   "guid": "cafe-com-tokens-ep0001",
   "pub_date": "Tue, 10 Nov 2026 17:15:07 -0300"
  }

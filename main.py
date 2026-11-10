@@ -294,7 +294,7 @@ QUADRO "SIMPLIFICANDO A VIDA" (marca registrada do programa, com humor):
 - Profundidade não é enrolação: nada de repetir a mesma ideia com outras palavras.
 
 ROTEIRO FALADO:
-- Abertura curta e animada: "Bom dia!" (sem nome), diga que é o Café com Tokens de {data_falada}, e dê uma prévia rápida do que vem.
+- O apresentador se chama Luty e fala em primeira pessoa. Abertura curta e animada: "Bom dia!", se apresente ("aqui é o Luty"), diga que é o Café com Tokens de {data_falada} e dê uma prévia rápida do que vem.
 - Corpo: conte cada notícia de forma fluida e conversada: o que rolou (com dados concretos), o "Simplificando a vida" quando fizer sentido e o que isso mexe no jogo. Sem ler rótulos ("número 1", "o que rolou:") e sem a expressão "por baixo do capô". Transições naturais de apresentador.
 - Encerramento redondo: por hoje é isso, os links de todas as notícias estão na descrição do episódio, convide a seguir o Café com Tokens para receber o próximo amanhã cedo, e se despeça até amanhã.
 - Texto puro para sintetizador de voz: sem emojis, sem marcações de palco ("[pausa]", "Locutor:"), sem asteriscos, sem travessão. Números fáceis de falar. Parágrafos separados por linha em branco.
@@ -357,12 +357,15 @@ def dividir_roteiro(texto, limite=2200):
     return blocos
 
 
-def tts_gemini(texto, wav_path):
+MODELOS_TTS = ["gemini-3.8-flash-tts", "gemini-3.8-flash-lite-tts", "gemini-3.1-flash-tts-preview", "gemini-2.5-flash-preview-tts"]
+
+
+def tts_gemini(texto, wav_path, modelo):
     if not GEMINI_API_KEY:
         return False
     instrucao = ("Narre em português do Brasil como o apresentador de um podcast matinal de tecnologia: "
-                 "voz calorosa, ritmo fluido, dicção clara, entonação natural de conversa entre amigos e energia positiva:\n\n")
-    for modelo in ["gemini-3.8-flash-tts", "gemini-3.8-flash-lite-tts", "gemini-3.1-flash-tts-preview", "gemini-2.5-flash-preview-tts"]:
+                 "voz calorosa e bem-humorada, ritmo fluido, dicção clara, sorriso na voz, entonação natural de conversa entre amigos:\n\n")
+    for _tentativa in range(2):
         url = f"https://generativelanguage.googleapis.com/v1beta/models/{modelo}:generateContent?key={GEMINI_API_KEY}"
         payload = {"contents": [{"parts": [{"text": instrucao + texto}]}],
                    "generationConfig": {"responseModalities": ["AUDIO"],
@@ -405,13 +408,19 @@ def narrar(roteiro, pasta, mp3_final):
     """Narra bloco a bloco com a mesma voz e junta tudo num MP3 de podcast (mono, 96 kbps, volume normalizado)."""
     os.makedirs(pasta, exist_ok=True)
     blocos = dividir_roteiro(roteiro)
-    partes = []
-    for i, bloco in enumerate(blocos):
-        wav = os.path.join(pasta, f"parte_{i:02d}.wav")
-        if not tts_gemini(bloco, wav):
-            partes = None
+    partes = None
+    # Episódio inteiro com UM modelo só (modelos diferentes soam diferentes). Se um bloco falhar, tenta o próximo modelo do zero.
+    for modelo in MODELOS_TTS:
+        feitas = []
+        for i, bloco in enumerate(blocos):
+            wav = os.path.join(pasta, f"parte_{i:02d}.wav")
+            if not tts_gemini(bloco, wav, modelo):
+                break
+            feitas.append(wav)
+        if len(feitas) == len(blocos):
+            partes = feitas
             break
-        partes.append(wav)
+        print(f"{modelo} não narrou o episódio inteiro: tentando o próximo modelo.")
 
     if partes is None:
         print("Gemini TTS falhou: narrando tudo com Edge-TTS (uma voz só no episódio inteiro).")
