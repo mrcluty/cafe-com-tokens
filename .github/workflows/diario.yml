@@ -55,6 +55,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898689+github-actions[bot]@users.noreply.github.com"
-          git add episodios.json historico.json ultimo_episodio.txt docs/feed.xml
+          git add episodios.json historico.json ultimo_episodio.txt docs/feed.xml docs/capas
           git commit -m "episodio ${{ steps.ep.outputs.tag }}"
           git push

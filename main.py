@@ -30,6 +30,7 @@ HISTORICO_PATH = os.path.join(BASE, "historico.json")
 EPISODIOS_PATH = os.path.join(BASE, "episodios.json")
 ULTIMO_PATH = os.path.join(BASE, "ultimo_episodio.txt")
 FEED_PATH = os.path.join(BASE, "docs", "feed.xml")
+CAPAS_DIR = os.path.join(BASE, "docs", "capas")  # capa de cada episódio (publicada pelo Pages)
 DIAS_HISTORICO = 30
 JANELA_HORAS = 48
 BRT = datetime.timezone(datetime.timedelta(hours=-3))
@@ -457,11 +458,23 @@ def hms(seg):
     return f"{seg // 3600:02d}:{seg % 3600 // 60:02d}:{seg % 60:02d}"
 
 
+def garantir_capa(ep):
+    """Gera docs/capas/<tag>.jpg se ainda não existe (desenho em capas.py)."""
+    import capas
+    caminho = os.path.join(CAPAS_DIR, f"{ep['tag']}.jpg")
+    if not os.path.exists(caminho):
+        os.makedirs(CAPAS_DIR, exist_ok=True)
+        capas.salvar_jpg(capas.capa_episodio(ep["numero"], ep["data"]), caminho)
+        print(f"Capa do episódio: {caminho}")
+    return f"capas/{ep['tag']}.jpg"
+
+
 def montar_feed(episodios):
     c = CONFIG
     site = c["site_url"].rstrip("/")
     itens = []
     for ep in sorted(episodios, key=lambda e: e["numero"], reverse=True):
+        capa = garantir_capa(ep)
         itens.append(f"""    <item>
       <title>#{ep['numero']} | {escape(ep['titulo'])}</title>
       <description><![CDATA[{ep['descricao_html']}]]></description>
@@ -469,6 +482,7 @@ def montar_feed(episodios):
       <enclosure url="{escape(ep['url'])}" length="{ep['bytes']}" type="audio/mpeg"/>
       <guid isPermaLink="false">{escape(ep['guid'])}</guid>
       <pubDate>{ep['pub_date']}</pubDate>
+      <itunes:image href="{escape(site)}/{capa}"/>
       <itunes:duration>{hms(ep['duracao'])}</itunes:duration>
       <itunes:episode>{ep['numero']}</itunes:episode>
       <itunes:episodeType>full</itunes:episodeType>
@@ -490,8 +504,8 @@ def montar_feed(episodios):
       <itunes:name>{escape(c['autor'])}</itunes:name>
       <itunes:email>{escape(c['email_dono'])}</itunes:email>
     </itunes:owner>
-    <itunes:image href="{escape(site)}/capa.jpg"/>
-    <image><url>{escape(site)}/capa.jpg</url><title>{escape(c['titulo'])}</title><link>{escape(site)}/</link></image>
+    <itunes:image href="{escape(site)}/capa.jpg?v=2"/>
+    <image><url>{escape(site)}/capa.jpg?v=2</url><title>{escape(c['titulo'])}</title><link>{escape(site)}/</link></image>
     <itunes:category text="Technology"/>
     <itunes:category text="News"><itunes:category text="Tech News"/></itunes:category>
     <itunes:explicit>false</itunes:explicit>
