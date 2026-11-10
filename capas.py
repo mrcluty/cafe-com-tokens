@@ -130,24 +130,25 @@ def data_curta(iso):
 
 
 def capa_episodio(numero, data_iso, lado=3000):
-    """Capa do episódio: número gigante no centro, marca discreta em cima e data embaixo."""
+    """Capa do episódio. Quadrada (Apple exige), mas o Spotify corta em 16:9 no card do episódio:
+    tudo fica na faixa central de 56% da altura (y 22% a 78%), com folga, e funciona nos dois formatos."""
     img, d = tela(lado)
     W = lado * SS
     cx = W / 2
     # marca: símbolo + nome em uma linha
-    f_marca = fonte("Bold", W * 0.05)
+    f_marca = fonte("Bold", W * 0.042)
     h_m = altura_caps(f_marca)
     s = h_m * 1.55
     nome = "Café com Tokens"
     l_nome = largura(nome, f_marca, -0.02)
     gap = s * 0.35
     total = s + gap + l_nome
-    y_m = W * 0.13
+    y_m = W * 0.265
     desenhar_simbolo(d, cx - total / 2, y_m + h_m - s, s)
     texto_centro(d, cx - total / 2 + s + gap + l_nome / 2, y_m, nome, f_marca, TINTA, -0.02)
     # número: maior possível dentro de 80% da largura
     num = str(numero)
-    px = W * 0.52
+    px = W * 0.42
     while True:
         f_num = fonte("Bold", px)
         f_hash = fonte("Bold", px * 0.42)
@@ -157,14 +158,14 @@ def capa_episodio(numero, data_iso, lado=3000):
             break
         px *= 0.95
     h_num = altura_caps(f_num)
-    topo = W * 0.52 - h_num / 2
+    topo = W * 0.505 - h_num / 2
     x0 = cx - (lh + ln) / 2
     _, t_h, _, b_h = f_hash.getbbox("#")
     d.text((x0, topo + h_num - b_h), "#", font=f_hash, fill=ACENTO)   # base do # na base do número
     texto_centro(d, x0 + lh + ln / 2, topo, num, f_num, TINTA, -0.05)
     # data
-    f_data = fonte("Medium", W * 0.042)
-    texto_centro(d, cx, W * 0.84, data_curta(data_iso), f_data, CINZA, 0)
+    f_data = fonte("Medium", W * 0.036)
+    texto_centro(d, cx, W * 0.735 - altura_caps(f_data), data_curta(data_iso), f_data, CINZA, 0)
     return finalizar(img, lado)
 
 
