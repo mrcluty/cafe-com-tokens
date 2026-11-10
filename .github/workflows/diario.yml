@@ -1,0 +1,60 @@
+name: Episodio diario
+
+on:
+  schedule:
+    # Brasilia = UTC-3. O GitHub atrasa de 5 a 20 min, entao a principal comeca 05:23 para sair ate 06:00.
+    - cron: '23 8 * * *'  # 05:23 BRT: rodada principal
+    - cron: '53 8 * * *'  # 05:53 BRT: reserva, so roda se a principal falhou
+    - cron: '23 9 * * *'  # 06:23 BRT: segunda reserva
+  workflow_dispatch: # Rodar na mao: aba Actions > Episodio diario > Run workflow
+
+permissions:
+  contents: write # salvar historico, feed e criar o Release com o MP3
+
+concurrency:
+  group: episodio-diario
+  cancel-in-progress: false
+
+jobs:
+  episodio:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: main
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+
+      - name: Instalar ffmpeg e dependencias
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+          pip install -r requirements.txt
+
+      - name: Gerar episodio
+        id: ep
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+        run: python main.py
+
+      - name: Publicar MP3 no Releases
+        if: steps.ep.outputs.tag != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.ep.outputs.tag }}
+          ARQUIVO: ${{ steps.ep.outputs.arquivo }}
+          TITULO: ${{ steps.ep.outputs.titulo }}
+        run: |
+          gh release create "$TAG" "$ARQUIVO" --title "$TITULO" \
+            --notes "Audio do episodio. Feed: https://mrcluty.github.io/cafe-com-tokens/feed.xml"
+
+      - name: Salvar feed e historico
+        if: steps.ep.outputs.tag != ''
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898689+github-actions[bot]@users.noreply.github.com"
+          git add episodios.json historico.json ultimo_episodio.txt docs/feed.xml
+          git commit -m "episodio ${{ steps.ep.outputs.tag }}"
+          git push
