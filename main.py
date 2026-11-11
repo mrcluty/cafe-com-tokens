@@ -555,7 +555,7 @@ def montar_feed(episodios):
     <title>{escape(c['titulo'])}</title>
     <link>{escape(site)}/</link>
     <atom:link href="{escape(site)}/feed.xml" rel="self" type="application/rss+xml"/>
-    <language>pt-br</language>
+    <language>pt-BR</language>
     <copyright>{escape(c['autor'])}</copyright>
     <description><![CDATA[{c['descricao']}]]></description>
     <itunes:summary><![CDATA[{c['descricao']}]]></itunes:summary>
