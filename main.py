@@ -284,14 +284,14 @@ SELEÇÃO:
 1. Primeiro a nata da IA: entram TODAS as notícias realmente relevantes de hoje (modelos novos, movimentos grandes de mercado, avanços técnicos reais, regulação que muda o jogo) e NENHUMA de enchimento. Critério: "quem acompanha IA perderia algo importante se não soubesse disso hoje?". Nunca duas sobre o mesmo fato. Ordene da mais impactante para a menos.
 2. Se a nata não sustentar o episódio (dia fraco), abra um pouco o campo, sempre começando por uma notícia de IA: traga 1 ou 2 itens da lista de CASES, contando como uma empresa real está usando IA, o que ela fez, o resultado e o que outros negócios podem copiar. Use só o que está nas listas; nunca invente empresa, número ou resultado.
 3. Dia cheio de notícia forte: não precisa de case.
-DURAÇÃO: o episódio tem de 8 a 10 minutos falados, o tempo de chegar no trabalho. Isso dá entre 1.500 e 1.700 palavras no roteiro (uns 9.000 caracteres): confira antes de responder.
+DURAÇÃO: o episódio tem de 10 a 12 minutos falados, o tempo de chegar no trabalho. Isso dá entre 1.800 e 2.000 palavras no roteiro (uns 11.000 caracteres): confira antes de responder.
 - Você monta a programação do dia (ordem, ritmo, quanto tempo cada assunto ganha). As notícias principais ganham de 1 minuto e meio a 2 minutos (uns 250 a 320 palavras): contexto (de onde isso vem, quem são os envolvidos), o fato com números concretos, o que muda na prática para quem usa ou cria com IA e uma opinião ou provocação para o ouvinte pensar.
 
 QUADRO "SIMPLIFICANDO A VIDA" (marca registrada do programa, com humor):
 - Quando uma notícia trouxer uma ideia complexa ou técnica, depois de contar o fato o apresentador chama o quadro com uma frase divertida, variando a cada vez, por exemplo "Tá, tudo muito bonito, mas vamos simplificar a vida?" ou "Agora, simplificando a vida:" ou "Traduzindo para simplificar a vida:", e explica de forma simples, com uma analogia do cotidiano, o que aquilo é e o que mudou de verdade. O ouvinte aprende que, quando vem a parte técnica, logo depois vem o momento de digerir.
 - Use só nas notícias que precisam (em geral 1 a 3 por episódio), nunca em todas.
 - O ouvinte já tem um conhecimento razoável de IA: NUNCA explique o básico (o que é token, o que é LLM, o que é um modelo). Simplifique a ideia nova e o impacto dela, não o vocabulário de sempre.
-- Dia com poucas notícias relevantes: NÃO invente nem encha com notícia fraca. Use os cases e aprofunde as que existem (história, concorrentes, o que vem a seguir, exemplos práticos de uso) até chegar aos 8 minutos.
+- Dia com poucas notícias relevantes: NÃO invente nem encha com notícia fraca. Use os cases e aprofunde as que existem (história, concorrentes, o que vem a seguir, exemplos práticos de uso) até chegar aos 10 minutos.
 - Profundidade não é enrolação: nada de repetir a mesma ideia com outras palavras.
 
 ROTEIRO FALADO:
@@ -315,19 +315,19 @@ REGRA DO TÍTULO (é o que faz alguém clicar no Spotify e achar o episódio na 
 
 Regra geral: nunca use travessão (—). Use vírgula, dois-pontos ou hífen."""
     ep = chamar_llm_json(prompt)
-    # Trava de duração: ~16 caracteres por segundo narrado; abaixo de 8.000 dá menos de 8 minutos.
+    # Trava de duração: ~17 caracteres por segundo narrado (#2: 9.035 = 8min57); abaixo de 10.000 dá menos de 10 minutos.
     # Se vier curto, manda o próprio roteiro de volta para EXPANDIR (reescrever do zero sai curto de novo).
     for _ in range(2):
         tam = len(ep.get("roteiro", ""))
-        if tam >= 8000:
+        if tam >= 10000:
             break
-        print(f"Roteiro curto ({tam} caracteres, uns {tam // 960} min): pedindo para expandir...")
+        print(f"Roteiro curto ({tam} caracteres, uns {tam // 1010} min): pedindo para expandir...")
         try:
             maior = chamar_llm_json(
                 prompt + "\n\nVOCÊ JÁ ESCREVEU ESTA VERSÃO, MAS ELA FICOU CURTA "
-                f"({len(ep['roteiro'].split())} palavras, uns {tam // 960} minutos):\n"
+                f"({len(ep['roteiro'].split())} palavras, uns {tam // 1010} minutos):\n"
                 + json.dumps(ep, ensure_ascii=False)
-                + "\n\nDevolva o mesmo JSON com o roteiro EXPANDIDO para 1.600 a 1.800 palavras: mantenha o que está bom e acrescente, "
+                + "\n\nDevolva o mesmo JSON com o roteiro EXPANDIDO para 1.900 a 2.100 palavras: mantenha o que está bom e acrescente, "
                 "em cada notícia, mais contexto, um 'Simplificando a vida' onde couber, exemplos práticos, uma piada ou comentário espirituoso "
                 "e uma provocação final. Se ainda faltar, inclua um case da lista. Sem repetir ideias.")
             if len(maior.get("roteiro", "")) > tam:
