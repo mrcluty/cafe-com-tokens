@@ -331,11 +331,11 @@ REGRA DO TÍTULO (é o que faz alguém clicar no Spotify e achar o episódio na 
 
 Regra geral: nunca use travessão (—). Use vírgula, dois-pontos ou hífen."""
     ep = chamar_llm_json(prompt)
-    # Trava de duração: ~17 caracteres por segundo narrado (#2: 9.035 = 8min57); abaixo de 14.000 fica abaixo de 14 minutos (Luty 11/11/2026: uns 15 min).
+    # Trava de duração: ~17 caracteres por segundo narrado (#2: 9.035 = 8min57); abaixo de 10.500 fica abaixo de 10 minutos (Luty 11/11/2026: alvo uns 15 min, mínimo 10).
     # Se vier curto, manda o próprio roteiro de volta para EXPANDIR (reescrever do zero sai curto de novo).
     for _ in range(2):
         tam = len(ep.get("roteiro", ""))
-        if tam >= 14000:
+        if tam >= 10500:
             break
         print(f"Roteiro curto ({tam} caracteres, uns {tam // 1010} min): pedindo para expandir...")
         try:
