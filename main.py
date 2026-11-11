@@ -369,7 +369,7 @@ MARCA_VOZ = re.compile(r"^\s*\[(LUTY|BIA|TEO|TÉO)\]\s*:?\s*", re.I)
 
 
 # Só no áudio (roteiro, título e notas continuam com a grafia certa). Luty 12/11/2026: o TTS lia "Luty" como "Luke"; o certo é "Lúti".
-PRONUNCIA = {r"Luty": "Lúti"}
+PRONUNCIA = {r"\bLuty\b": "Lúti"}
 
 
 def pronuncia(texto):
