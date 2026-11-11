@@ -1,10 +1,11 @@
 {
- "titulo": "Café com Tokens",
+ "titulo": "Café com Tokens: Notícias de IA",
+ "subtitulo": "Notícias de inteligência artificial todo dia, em português e com bom humor.",
  "autor": "Marco Luty",
  "email_dono": "cafecomtokens.podcast@gmail.com",
  "repositorio": "mrcluty/cafe-com-tokens",
  "site_url": "https://mrcluty.github.io/cafe-com-tokens",
- "descricao": "IA todo dia, direto ao ponto. O Café com Tokens pega o que realmente importou no mundo da inteligência artificial nas últimas horas (OpenAI, Google, Anthropic, Meta e as startups que estão mexendo no jogo) e explica em poucos minutos: o que aconteceu, o que isso significa em linguagem simples e por que isso muda alguma coisa para você. Sem enrolação, sem notícia repetida e sem número fixo: se o dia foi fraco, o episódio é curto. Episódio novo toda manhã.",
+ "descricao": "Notícias de inteligência artificial todo dia, em português, em uns 15 minutos. O Café com Tokens conta o que realmente importou no mundo da IA nas últimas horas: ChatGPT e OpenAI, Google Gemini, Claude e Anthropic, Meta, Nvidia e as startups que estão mexendo no jogo. Com bom humor, sem enrolação e sem notícia repetida, cada novidade vem explicada de um jeito simples, com o que muda na prática para quem usa, cria ou trabalha com IA. No quadro Simplificando a Vida, a parte técnica vira coisa do dia a dia. Dia fraco de notícia? Entram cases reais de empresas usando IA nos negócios. Episódio novo toda manhã, às 6h, o tempo do café ou do caminho até o trabalho.",
  "vozes": {
   "LUTY": {
    "nome": "Luty",

@@ -319,7 +319,7 @@ ROTEIRO FALADO (três vozes, como uma redação de rádio):
 RESPONDA SÓ COM JSON, neste formato:
 {{
  "titulo": "título do episódio (sem data e sem número, o número entra sozinho), seguindo a REGRA DO TÍTULO abaixo",
- "resumo": "1 a 2 frases que vendem o episódio, para a descrição no Spotify",
+ "resumo": "2 frases (até 280 caracteres) que vendem o episódio, seguindo a REGRA DA DESCRIÇÃO abaixo",
  "noticias": [{{"titulo": "título curto em português", "fonte": "nome da fonte", "link": "link exato da lista acima"}}],
  "roteiro": "o texto falado completo, cada parágrafo começando com [LUTY], [BIA] ou [TEO]"
 }}
@@ -328,6 +328,11 @@ REGRA DO TÍTULO (é o que faz alguém clicar no Spotify e achar o episódio na 
 - Chamativo de verdade: provoque curiosidade, conflito, número forte ou consequência ("Por que...", "acabou de...", "ninguém esperava", "vai mudar", "US$ 50 bilhões"). Pode apelar para a emoção, sem mentir nem inventar.
 - Se couber, puxe a 2ª notícia mais forte com "e" ou vírgula.
 - Exemplos do tom: "ChatGPT agora faz compras sozinho, e o varejo entrou em pânico" / "Anthropic vai pra bolsa: quanto vale o Claude?" / "Nvidia em crise: quem vai mandar no chip da IA?"
+- Use o nome exato como as pessoas digitam na busca (ChatGPT, não "o chatbot da OpenAI"; Gemini 3, não "o novo modelo do Google"). Se nenhum nome do título deixar claro que é IA, inclua "IA" no título.
+- Proibido: emoji, CAIXA ALTA, data, número do episódio, nome do podcast e lista de palavras soltas (a busca do Spotify e da Apple pune título que parece spam).
+REGRA DA DESCRIÇÃO (o "resumo"; a busca do Spotify lê esse texto):
+- Comece pelo fato mais forte, com os nomes das 2 ou 3 empresas ou produtos principais do episódio escritos por extenso, do jeito que se busca.
+- Termine com uma consequência ou provocação que dê vontade de ouvir. Frases naturais, nunca lista de palavras-chave.
 
 Regra geral: nunca use travessão (—). Use vírgula, dois-pontos ou hífen."""
     ep = chamar_llm_json(prompt)
@@ -493,7 +498,9 @@ def descricao_html(ep):
     itens = "".join(f'<li><a href="{escape(n["link"])}">{escape(n["titulo"])}</a> ({escape(n.get("fonte", ""))})</li>'
                     for n in ep["noticias"])
     return (f"<p>{escape(ep['resumo'])}</p><p><strong>As notícias de hoje:</strong></p><ul>{itens}</ul>"
-            f"<p>Café com Tokens: IA todo dia, direto ao ponto. Episódio novo toda manhã.</p>")
+            "<p>Café com Tokens: as notícias de inteligência artificial (IA) do dia em uns 15 minutos, em português, "
+            "com bom humor e explicadas de um jeito simples. ChatGPT, OpenAI, Google Gemini, Claude, Anthropic, Meta, Nvidia "
+            "e as startups que mexem no jogo. Episódio novo toda manhã, às 6h. Siga o podcast para ouvir o próximo.</p>")
 
 
 def hms(seg):
@@ -518,9 +525,10 @@ def montar_feed(episodios):
     for ep in sorted(episodios, key=lambda e: e["numero"], reverse=True):
         capa = garantir_capa(ep)
         itens.append(f"""    <item>
-      <title>#{ep['numero']} | {escape(ep['titulo'])}</title>
-      <description><![CDATA[{ep['descricao_html']}]]></description>
-      <content:encoded><![CDATA[{ep['descricao_html']}]]></content:encoded>
+      <title>{escape(ep['titulo'])} | #{ep['numero']}</title>
+      <itunes:title>{escape(ep['titulo'])}</itunes:title>
+      <description><![CDATA[{descricao_html(ep)}]]></description>
+      <content:encoded><![CDATA[{descricao_html(ep)}]]></content:encoded>
       <enclosure url="{escape(ep['url'])}" length="{ep['bytes']}" type="audio/mpeg"/>
       <guid isPermaLink="false">{escape(ep['guid'])}</guid>
       <pubDate>{ep['pub_date']}</pubDate>
@@ -541,6 +549,7 @@ def montar_feed(episodios):
     <copyright>{escape(c['autor'])}</copyright>
     <description><![CDATA[{c['descricao']}]]></description>
     <itunes:summary><![CDATA[{c['descricao']}]]></itunes:summary>
+    <itunes:subtitle>{escape(c['subtitulo'])}</itunes:subtitle>
     <itunes:author>{escape(c['autor'])}</itunes:author>
     <itunes:owner>
       <itunes:name>{escape(c['autor'])}</itunes:name>
