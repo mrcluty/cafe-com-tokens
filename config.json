@@ -4,6 +4,22 @@
  "email_dono": "cafecomtokens.podcast@gmail.com",
  "repositorio": "mrcluty/cafe-com-tokens",
  "site_url": "https://mrcluty.github.io/cafe-com-tokens",
- "voz_gemini": "Orus",
- "descricao": "IA todo dia, direto ao ponto. O Café com Tokens pega o que realmente importou no mundo da inteligência artificial nas últimas horas (OpenAI, Google, Anthropic, Meta e as startups que estão mexendo no jogo) e explica em poucos minutos: o que aconteceu, o que isso significa em linguagem simples e por que isso muda alguma coisa para você. Sem enrolação, sem notícia repetida e sem número fixo: se o dia foi fraco, o episódio é curto. Episódio novo toda manhã."
+ "descricao": "IA todo dia, direto ao ponto. O Café com Tokens pega o que realmente importou no mundo da inteligência artificial nas últimas horas (OpenAI, Google, Anthropic, Meta e as startups que estão mexendo no jogo) e explica em poucos minutos: o que aconteceu, o que isso significa em linguagem simples e por que isso muda alguma coisa para você. Sem enrolação, sem notícia repetida e sem número fixo: se o dia foi fraco, o episódio é curto. Episódio novo toda manhã.",
+ "vozes": {
+  "LUTY": {
+   "nome": "Luty",
+   "gemini": "Orus",
+   "edge": "pt-BR-AntonioNeural"
+  },
+  "BIA": {
+   "nome": "Bia",
+   "gemini": "Aoede",
+   "edge": "pt-BR-FranciscaNeural"
+  },
+  "TEO": {
+   "nome": "Téo",
+   "gemini": "Puck",
+   "edge": "pt-BR-MacerioMultilingualNeural"
+  }
+ }
 }

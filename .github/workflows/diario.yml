@@ -12,6 +12,10 @@ on:
         description: 'Disparo automatico (cron-job.org): pula se o episodio de hoje ja saiu'
         type: boolean
         default: false
+      refazer:
+        description: 'Numero do episodio para regravar com as mesmas noticias (vazio = episodio do dia)'
+        type: string
+        default: ''
 
 permissions:
   contents: write # salvar historico, feed e criar o Release com o MP3
@@ -43,10 +47,11 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           AUTOMATICO: ${{ inputs.automatico }}
+          REFAZER: ${{ inputs.refazer }}
         run: python main.py
 
       - name: Publicar MP3 no Releases
-        if: steps.ep.outputs.tag != ''
+        if: steps.ep.outputs.tag != '' && steps.ep.outputs.refeito != 'sim'
         env:
           GH_TOKEN: ${{ github.token }}
           TAG: ${{ steps.ep.outputs.tag }}
@@ -55,6 +60,14 @@ jobs:
         run: |
           gh release create "$TAG" "$ARQUIVO" --title "$TITULO" \
             --notes "Audio do episodio. Feed: https://mrcluty.github.io/cafe-com-tokens/feed.xml"
+
+      - name: Trocar o MP3 do episodio refeito
+        if: steps.ep.outputs.refeito == 'sim'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.ep.outputs.tag }}
+          ARQUIVO: ${{ steps.ep.outputs.arquivo }}
+        run: gh release upload "$TAG" "$ARQUIVO" --clobber
 
       - name: Salvar feed e historico
         if: steps.ep.outputs.tag != ''

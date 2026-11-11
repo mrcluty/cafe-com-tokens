@@ -15,6 +15,7 @@ import json
 import wave
 import base64
 import shutil
+import time
 import datetime
 import subprocess
 from email.utils import format_datetime, parsedate_to_datetime
@@ -294,18 +295,21 @@ QUADRO "SIMPLIFICANDO A VIDA" (marca registrada do programa, com humor):
 - Dia com poucas notícias relevantes: NÃO invente nem encha com notícia fraca. Use os cases e aprofunde as que existem (história, concorrentes, o que vem a seguir, exemplos práticos de uso) até chegar aos 10 minutos.
 - Profundidade não é enrolação: nada de repetir a mesma ideia com outras palavras.
 
-ROTEIRO FALADO:
-- O apresentador se chama Luty e fala em primeira pessoa. Abertura curta e animada: "Bom dia!", se apresente ("aqui é o Luty"), diga que é o Café com Tokens de {data_falada} e dê uma prévia rápida do que vem.
-- Corpo: conte cada notícia de forma fluida e conversada: o que rolou (com dados concretos), o "Simplificando a vida" quando fizer sentido e o que isso mexe no jogo. Sem ler rótulos ("número 1", "o que rolou:") e sem a expressão "por baixo do capô". Transições naturais de apresentador.
-- Encerramento redondo: por hoje é isso, os links de todas as notícias estão na descrição do episódio, convide a seguir o Café com Tokens para receber o próximo amanhã cedo, e se despeça até amanhã.
-- Texto puro para sintetizador de voz: sem emojis, sem marcações de palco ("[pausa]", "Locutor:"), sem asteriscos, sem travessão. Números fáceis de falar. Parágrafos separados por linha em branco.
+ROTEIRO FALADO (três vozes, como uma redação de rádio):
+- LUTY é o apresentador e âncora: fala em primeira pessoa, abre, faz as transições e fecha. Abertura curta e animada: "Bom dia!", se apresente ("aqui é o Luty"), diga que é o Café com Tokens de {data_falada} e dê uma prévia rápida do que vem.
+- BIA e TÉO são os repórteres: cada notícia (ou case) é contada INTEIRA por um deles, alternando Bia, Téo, Bia, Téo... O repórter conta o que rolou (com dados concretos), faz o "Simplificando a vida" quando fizer sentido e diz o que isso mexe no jogo.
+- Luty chama cada repórter pelo nome antes da notícia ("e quem traz essa é a Bia", "Téo, conta aí", variando) e pode comentar em uma frase depois, com humor. O repórter pode responder ao Luty com leveza ("valeu, Luty"). Clima de equipe que se diverte, sem virar bate-papo longo: a notícia é a estrela.
+- Sem ler rótulos ("número 1", "o que rolou:") e sem a expressão "por baixo do capô".
+- Encerramento com o Luty: por hoje é isso, os links de todas as notícias estão na descrição do episódio, convide a seguir o Café com Tokens para receber o próximo amanhã cedo, e se despeça até amanhã.
+- FORMATO OBRIGATÓRIO: cada parágrafo começa com a marca de quem fala, [LUTY], [BIA] ou [TEO], seguida do texto. Parágrafos separados por linha em branco. Essa marca é a ÚNICA marcação permitida (ela some antes da narração).
+- Texto puro para sintetizador de voz: sem emojis, sem outras marcações de palco ("[pausa]", "Locutor:"), sem asteriscos, sem travessão e sem indicação de tom ou emoção (nada de "(rindo)" ou "animado:"): tudo o que estiver no texto vai ser falado em voz alta. Números fáceis de falar.
 
 RESPONDA SÓ COM JSON, neste formato:
 {{
  "titulo": "título do episódio (sem data e sem número, o número entra sozinho), seguindo a REGRA DO TÍTULO abaixo",
  "resumo": "1 a 2 frases que vendem o episódio, para a descrição no Spotify",
  "noticias": [{{"titulo": "título curto em português", "fonte": "nome da fonte", "link": "link exato da lista acima"}}],
- "roteiro": "o texto falado completo"
+ "roteiro": "o texto falado completo, cada parágrafo começando com [LUTY], [BIA] ou [TEO]"
 }}
 REGRA DO TÍTULO (é o que faz alguém clicar no Spotify e achar o episódio na busca):
 - Até 65 caracteres. Comece pelo nome que as pessoas buscam: a empresa ou o produto mais famoso do dia (ChatGPT, OpenAI, Google, Gemini, Claude, Anthropic, Nvidia, Meta, Apple...).
@@ -315,11 +319,11 @@ REGRA DO TÍTULO (é o que faz alguém clicar no Spotify e achar o episódio na 
 
 Regra geral: nunca use travessão (—). Use vírgula, dois-pontos ou hífen."""
     ep = chamar_llm_json(prompt)
-    # Trava de duração: ~17 caracteres por segundo narrado (#2: 9.035 = 8min57); abaixo de 10.000 dá menos de 10 minutos.
+    # Trava de duração: ~17 caracteres por segundo narrado (#2: 9.035 = 8min57); abaixo de 10.500 fica perto ou abaixo de 10 minutos.
     # Se vier curto, manda o próprio roteiro de volta para EXPANDIR (reescrever do zero sai curto de novo).
     for _ in range(2):
         tam = len(ep.get("roteiro", ""))
-        if tam >= 10000:
+        if tam >= 10500:
             break
         print(f"Roteiro curto ({tam} caracteres, uns {tam // 1010} min): pedindo para expandir...")
         try:
@@ -344,35 +348,47 @@ Regra geral: nunca use travessão (—). Use vírgula, dois-pontos ou hífen."""
 
 
 # ---------------------------------------------------------------- áudio
+MARCA_VOZ = re.compile(r"^\s*\[(LUTY|BIA|TEO|TÉO)\]\s*:?\s*", re.I)
+
+
 def dividir_roteiro(texto, limite=2200):
-    """O TTS do Gemini corta textos longos: narra em blocos de parágrafos."""
-    blocos, atual = [], ""
+    """Divide por quem fala ([LUTY], [BIA], [TEO]) e, dentro de cada fala, em blocos que o TTS aguenta.
+    Devolve [(voz, texto)] sem as marcas. Parágrafo sem marca continua com a voz anterior."""
+    blocos, voz, atual = [], "LUTY", ""
     for par in [p.strip() for p in re.split(r"\n\s*\n", texto) if p.strip()]:
-        if atual and len(atual) + len(par) > limite:
-            blocos.append(atual)
-            atual = par
-        else:
-            atual = f"{atual}\n\n{par}" if atual else par
+        m = MARCA_VOZ.match(par)
+        nova = m.group(1).upper().replace("TÉO", "TEO") if m else voz
+        par = MARCA_VOZ.sub("", par).strip()
+        if not par:
+            continue
+        if atual and (nova != voz or len(atual) + len(par) > limite):
+            blocos.append((voz, atual))
+            atual = ""
+        voz = nova
+        atual = f"{atual}\n\n{par}" if atual else par
     if atual:
-        blocos.append(atual)
+        blocos.append((voz, atual))
     return blocos
 
 
 MODELOS_TTS = ["gemini-3.8-flash-tts", "gemini-3.8-flash-lite-tts", "gemini-3.1-flash-tts-preview", "gemini-2.5-flash-preview-tts"]
 
 
-def tts_gemini(texto, wav_path, modelo):
+def tts_gemini(texto, wav_path, modelo, voz):
+    # Só o texto falado vai para o TTS: instrução de tom junto do texto acaba sendo LIDA em voz alta (aconteceu no #2).
     if not GEMINI_API_KEY:
         return False
-    instrucao = ("Narre em português do Brasil como o apresentador de um podcast matinal de tecnologia: "
-                 "voz calorosa e bem-humorada, ritmo fluido, dicção clara, sorriso na voz, entonação natural de conversa entre amigos:\n\n")
-    for _tentativa in range(2):
+    for _tentativa in range(3):
         url = f"https://generativelanguage.googleapis.com/v1beta/models/{modelo}:generateContent?key={GEMINI_API_KEY}"
-        payload = {"contents": [{"parts": [{"text": instrucao + texto}]}],
+        payload = {"contents": [{"parts": [{"text": texto}]}],
                    "generationConfig": {"responseModalities": ["AUDIO"],
-                                        "speechConfig": {"voiceConfig": {"prebuiltVoiceConfig": {"voiceName": CONFIG["voz_gemini"]}}}}}
+                                        "speechConfig": {"voiceConfig": {"prebuiltVoiceConfig": {"voiceName": CONFIG["vozes"][voz]["gemini"]}}}}}
         try:
             res = requests.post(url, json=payload, timeout=180)
+            if res.status_code == 429 and "PerDay" not in res.text:
+                print(f"TTS {modelo}: limite por minuto, esperando 30 s")
+                time.sleep(30)
+                continue
             if res.status_code != 200:
                 print(f"TTS {modelo} {res.status_code}: {res.text[:160]}")
                 continue
@@ -385,37 +401,37 @@ def tts_gemini(texto, wav_path, modelo):
                     wf.setsampwidth(2)
                     wf.setframerate(24000)
                     wf.writeframes(raw)
-            print(f"  bloco narrado com {modelo}")
+            print(f"  {voz} narrado com {modelo}")
             return True
         except Exception as e:
             print(f"TTS {modelo}: {e}")
     return False
 
 
-def tts_edge(texto, mp3_path):
+def tts_edge(texto, mp3_path, voz="LUTY"):
     import asyncio
     import edge_tts
 
     async def falar():
         try:
-            await edge_tts.Communicate(texto, "pt-BR-AntonioNeural").save(mp3_path)
+            await edge_tts.Communicate(texto, CONFIG["vozes"][voz]["edge"]).save(mp3_path)
         except Exception:
-            await edge_tts.Communicate(texto, "pt-BR-ThalitaMultilingualNeural").save(mp3_path)
+            await edge_tts.Communicate(texto, "pt-BR-AntonioNeural").save(mp3_path)
     asyncio.run(falar())
     return os.path.exists(mp3_path)
 
 
 def narrar(roteiro, pasta, mp3_final):
-    """Narra bloco a bloco com a mesma voz e junta tudo num MP3 de podcast (mono, 96 kbps, volume normalizado)."""
+    """Narra fala a fala (cada pessoa com a sua voz) e junta tudo num MP3 de podcast (mono, 96 kbps, volume normalizado)."""
     os.makedirs(pasta, exist_ok=True)
     blocos = dividir_roteiro(roteiro)
     partes = None
     # Episódio inteiro com UM modelo só (modelos diferentes soam diferentes). Se um bloco falhar, tenta o próximo modelo do zero.
     for modelo in MODELOS_TTS:
         feitas = []
-        for i, bloco in enumerate(blocos):
+        for i, (voz, bloco) in enumerate(blocos):
             wav = os.path.join(pasta, f"parte_{i:02d}.wav")
-            if not tts_gemini(bloco, wav, modelo):
+            if not tts_gemini(bloco, wav, modelo, voz):
                 break
             feitas.append(wav)
         if len(feitas) == len(blocos):
@@ -424,19 +440,33 @@ def narrar(roteiro, pasta, mp3_final):
         print(f"{modelo} não narrou o episódio inteiro: tentando o próximo modelo.")
 
     if partes is None:
-        print("Gemini TTS falhou: narrando tudo com Edge-TTS (uma voz só no episódio inteiro).")
-        mp3 = os.path.join(pasta, "edge.mp3")
-        tts_edge(roteiro, mp3)
-        partes = [mp3]
+        print("Gemini TTS falhou: narrando com Edge-TTS (mesmas três pessoas, vozes do Edge).")
+        partes = []
+        for i, (voz, bloco) in enumerate(blocos):
+            mp3 = os.path.join(pasta, f"edge_{i:02d}.mp3")
+            tts_edge(bloco, mp3, voz)
+            partes.append(mp3)
+
+    # Respiro de 0,4 s entre as falas (só no áudio do Gemini, que sai todo em WAV com o mesmo formato).
+    if len(partes) > 1 and all(p.endswith(".wav") for p in partes):
+        pausa = os.path.join(pasta, "pausa.wav")
+        with wave.open(partes[0]) as w:
+            canais, largura, taxa = w.getnchannels(), w.getsampwidth(), w.getframerate()
+        with wave.open(pausa, "wb") as w:
+            w.setnchannels(canais)
+            w.setsampwidth(largura)
+            w.setframerate(taxa)
+            w.writeframes(b"\0" * (int(taxa * 0.4) * canais * largura))
+        partes = [x for p in partes for x in (p, pausa)][:-1]
 
     lista = os.path.join(pasta, "lista.txt")
     with open(lista, "w", encoding="utf-8") as f:
         for p in partes:
             f.write(f"file '{os.path.abspath(p).replace(os.sep, '/')}'\n")
     cmd = ["ffmpeg", "-y", "-loglevel", "error", "-f", "concat", "-safe", "0", "-i", lista,
-           "-af", "loudnorm=I=-16:TP=-1.5:LRA=11", "-ac", "1", "-ar", "44100",
+           "-af", "loudnorm=I=-16:TP=-1.5:LRA=11,apad=pad_dur=2.5", "-ac", "1", "-ar", "44100",
            "-c:a", "libmp3lame", "-b:a", "96k", mp3_final]
-    subprocess.run(cmd, check=True)
+    subprocess.run(cmd, check=True)  # apad: 2,5 s de silêncio no fim, nada de corte seco
     return duracao_segundos(mp3_final)
 
 
@@ -522,9 +552,53 @@ def montar_feed(episodios):
     print(f"Feed atualizado: {len(episodios)} episódios.")
 
 
+# ---------------------------------------------------------------- refazer
+def refazer(numero):
+    """Regrava o episódio N com as MESMAS notícias no formato atual. Mantém título, data, guid e capa;
+    troca só o áudio (arquivo -vK.mp3 no mesmo Release). Uso: REFAZER=N (aba Actions > Run workflow)."""
+    episodios = carregar_json(EPISODIOS_PATH, [])
+    ep_antigo = next(e for e in episodios if e["numero"] == numero)
+    links = {normalizar_link(n["link"]) for n in ep_antigo["noticias"]}
+    historico = [i for i in carregar_historico() if normalizar_link(i["link"]) not in links]
+
+    artigos = [a for a in coletar_noticias(frozenset()) if normalizar_link(a["link"]) in links]
+    achados = {normalizar_link(a["link"]) for a in artigos}
+    for n in ep_antigo["noticias"]:  # notícia que já saiu da janela dos feeds: entra com o que temos
+        if normalizar_link(n["link"]) not in achados:
+            artigos.append({"fonte": n.get("fonte", ""), "titulo": n["titulo"], "link": n["link"], "resumo": "", "tipo": "noticia"})
+    print(f"Refazendo o #{numero} com {len(artigos)} notícias.")
+
+    ep = gerar_episodio(artigos, historico, numero)
+    print(f"Roteiro novo: {len(ep['roteiro'])} caracteres")
+
+    m = re.search(r"-v(\d+)\.mp3$", ep_antigo["arquivo"])
+    k = int(m.group(1)) + 1 if m else 2
+    nome = f"cafe-com-tokens-{ep_antigo['data']}-v{k}.mp3"
+    pasta = os.path.join(BASE, "tmp")
+    mp3 = os.path.join(BASE, nome)
+    duracao = narrar(aplicar_fonetica(ep["roteiro"]), pasta, mp3)
+    print(f"Áudio novo: {nome} ({hms(duracao)})")
+
+    repo = os.environ.get("GITHUB_REPOSITORY", CONFIG["repositorio"])
+    ep_antigo.update({"arquivo": nome, "url": f"https://github.com/{repo}/releases/download/{ep_antigo['tag']}/{nome}",
+                      "bytes": os.path.getsize(mp3), "duracao": duracao})
+    with open(EPISODIOS_PATH, "w", encoding="utf-8") as f:
+        json.dump(episodios, f, ensure_ascii=False, indent=1)
+    montar_feed(episodios)
+
+    saida = os.environ.get("GITHUB_OUTPUT")
+    if saida:
+        with open(saida, "a", encoding="utf-8") as f:
+            f.write(f"tag={ep_antigo['tag']}\narquivo={nome}\nrefeito=sim\n")
+    shutil.rmtree(pasta, ignore_errors=True)
+
+
 # ---------------------------------------------------------------- principal
 def main():
     teste = "--teste" in sys.argv
+    if os.environ.get("REFAZER", "").strip().isdigit():
+        refazer(int(os.environ["REFAZER"]))
+        return
     if "--feed" in sys.argv:
         montar_feed(carregar_json(EPISODIOS_PATH, []))
         return
