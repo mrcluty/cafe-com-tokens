@@ -374,12 +374,13 @@ def dividir_roteiro(texto, limite=2200):
 MODELOS_TTS = ["gemini-3.8-flash-tts", "gemini-3.8-flash-lite-tts", "gemini-3.1-flash-tts-preview", "gemini-2.5-flash-preview-tts"]
 
 
-def tts_gemini(texto, wav_path, modelo, voz):
+def tts_gemini(texto, wav_path, modelo, voz, chave=None):
     # Só o texto falado vai para o TTS: instrução de tom junto do texto acaba sendo LIDA em voz alta (aconteceu no #2).
-    if not GEMINI_API_KEY:
+    chave = chave or GEMINI_API_KEY
+    if not chave:
         return False
     for _tentativa in range(3):
-        url = f"https://generativelanguage.googleapis.com/v1beta/models/{modelo}:generateContent?key={GEMINI_API_KEY}"
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/{modelo}:generateContent?key={chave}"
         payload = {"contents": [{"parts": [{"text": texto}]}],
                    "generationConfig": {"responseModalities": ["AUDIO"],
                                         "speechConfig": {"voiceConfig": {"prebuiltVoiceConfig": {"voiceName": CONFIG["vozes"][voz]["gemini"]}}}}}
@@ -425,27 +426,25 @@ def narrar(roteiro, pasta, mp3_final):
     """Narra fala a fala (cada pessoa com a sua voz) e junta tudo num MP3 de podcast (mono, 96 kbps, volume normalizado)."""
     os.makedirs(pasta, exist_ok=True)
     blocos = dividir_roteiro(roteiro)
-    partes = None
-    # Episódio inteiro com UM modelo só (modelos diferentes soam diferentes). Se um bloco falhar, tenta o próximo modelo do zero.
-    for modelo in MODELOS_TTS:
-        feitas = []
-        for i, (voz, bloco) in enumerate(blocos):
-            wav = os.path.join(pasta, f"parte_{i:02d}.wav")
-            if not tts_gemini(bloco, wav, modelo, voz):
-                break
-            feitas.append(wav)
-        if len(feitas) == len(blocos):
-            partes = feitas
-            break
-        print(f"{modelo} não narrou o episódio inteiro: tentando o próximo modelo.")
-
-    if partes is None:
-        print("Gemini TTS falhou: narrando com Edge-TTS (mesmas três pessoas, vozes do Edge).")
-        partes = []
-        for i, (voz, bloco) in enumerate(blocos):
+    # Cadeia (chave, modelo): primeiro todos os modelos na chave do podcast, depois na chave reserva.
+    # Nunca recomeça do zero (isso queimava a cota do dia): a fala que falha passa para o próximo da cadeia
+    # e o que já foi narrado fica. Como cada notícia é de uma pessoa, a troca de modelo quase não aparece.
+    chaves = [k for k in (GEMINI_API_KEY, os.environ.get("GEMINI_API_KEY_2")) if k]
+    cadeia = [(k, m) for k in chaves for m in MODELOS_TTS]
+    pos, partes = 0, []
+    for i, (voz, bloco) in enumerate(blocos):
+        wav = os.path.join(pasta, f"parte_{i:02d}.wav")
+        while pos < len(cadeia) and not tts_gemini(bloco, wav, cadeia[pos][1], voz, cadeia[pos][0]):
+            pos += 1
+            if pos < len(cadeia):
+                print(f"Passando para {cadeia[pos][1]} (chave {chaves.index(cadeia[pos][0]) + 1}).")
+        if pos >= len(cadeia):
+            print(f"Gemini sem cota: fala {i} ({voz}) com Edge-TTS.")
             mp3 = os.path.join(pasta, f"edge_{i:02d}.mp3")
             tts_edge(bloco, mp3, voz)
-            partes.append(mp3)
+            subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", mp3, "-ac", "1", "-ar", "24000",
+                            "-c:a", "pcm_s16le", wav], check=True)
+        partes.append(wav)
 
     # Respiro de 0,4 s entre as falas (só no áudio do Gemini, que sai todo em WAV com o mesmo formato).
     if len(partes) > 1 and all(p.endswith(".wav") for p in partes):

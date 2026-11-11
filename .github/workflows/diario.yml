@@ -45,6 +45,7 @@ jobs:
         id: ep
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_API_KEY_2: ${{ secrets.GEMINI_API_KEY_2 }}
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           AUTOMATICO: ${{ inputs.automatico }}
           REFAZER: ${{ inputs.refazer }}
