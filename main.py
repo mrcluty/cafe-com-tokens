@@ -368,6 +368,16 @@ Regra geral: nunca use travessão (—). Use vírgula, dois-pontos ou hífen."""
 MARCA_VOZ = re.compile(r"^\s*\[(LUTY|BIA|TEO|TÉO)\]\s*:?\s*", re.I)
 
 
+# Só no áudio (roteiro, título e notas continuam com a grafia certa). Luty 12/11/2026: o TTS lia "Luty" como "Luke"; o certo é "Lúti".
+PRONUNCIA = {r"Luty": "Lúti"}
+
+
+def pronuncia(texto):
+    for padrao, falado in PRONUNCIA.items():
+        texto = re.sub(padrao, falado, texto, flags=re.I)
+    return texto
+
+
 def dividir_roteiro(texto, limite=2200):
     """Divide por quem fala ([LUTY], [BIA], [TEO]) e, dentro de cada fala, em blocos que o TTS aguenta.
     Devolve [(voz, texto)] sem as marcas. Parágrafo sem marca continua com a voz anterior."""
@@ -375,7 +385,7 @@ def dividir_roteiro(texto, limite=2200):
     for par in [p.strip() for p in re.split(r"\n\s*\n", texto) if p.strip()]:
         m = MARCA_VOZ.match(par)
         nova = m.group(1).upper().replace("TÉO", "TEO") if m else voz
-        par = MARCA_VOZ.sub("", par).strip()
+        par = pronuncia(MARCA_VOZ.sub("", par).strip())
         if not par:
             continue
         if atual and (nova != voz or len(atual) + len(par) > limite):
