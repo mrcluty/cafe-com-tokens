@@ -2,10 +2,10 @@ name: Episodio diario
 
 on:
   schedule:
-    # Brasilia = UTC-3. O GitHub atrasa de 5 a 20 min, entao a principal comeca 05:23 para sair ate 06:00.
-    - cron: '23 8 * * *'  # 05:23 BRT: rodada principal
-    - cron: '53 8 * * *'  # 05:53 BRT: reserva, so roda se a principal falhou
-    - cron: '23 9 * * *'  # 06:23 BRT: segunda reserva
+    # Brasilia = UTC-3. Disparo principal e o cron-job.org (00:30 e 02:30 BRT, job 8840656): o agendador do GitHub
+    # nao dispara nesta conta. Estes ficam de reserva. Sai de madrugada para o Spotify ter tempo de puxar ate 06:00.
+    - cron: '23 4 * * *'  # 01:23 BRT: reserva
+    - cron: '53 5 * * *'  # 02:53 BRT: segunda reserva
   workflow_dispatch: # Rodar na mao: aba Actions > Episodio diario > Run workflow
     inputs:
       automatico:
