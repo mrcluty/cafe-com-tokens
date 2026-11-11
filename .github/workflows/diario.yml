@@ -38,9 +38,12 @@ jobs:
           python-version: '3.11'
 
       - name: Instalar ffmpeg e dependencias
-        timeout-minutes: 8 # ja travou 16 min no apt; se travar, cai e a reserva das 02:30 roda
+        timeout-minutes: 10 # o apt ja travou 16 min (11/11/2026): tenta sem update primeiro, com limite de tempo
         run: |
-          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+          if ! command -v ffmpeg >/dev/null; then
+            timeout 150 sudo apt-get install -y -qq --no-install-recommends ffmpeg               || (timeout 180 sudo apt-get update -qq; timeout 240 sudo apt-get install -y -qq --no-install-recommends ffmpeg)
+          fi
+          ffmpeg -version | head -1
           pip install -r requirements.txt
 
       - name: Gerar episodio
