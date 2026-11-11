@@ -38,6 +38,18 @@ BRT = datetime.timezone(datetime.timedelta(hours=-3))
 HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
 
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
+
+
+def achar_ffmpeg():
+    """ffmpeg do sistema se houver; senão o do pacote imageio-ffmpeg (vem pelo pip, sem depender do apt,
+    que ficou fora do ar em 11/11/2026 e travou o episódio)."""
+    if shutil.which("ffmpeg"):
+        return "ffmpeg"
+    import imageio_ffmpeg
+    return imageio_ffmpeg.get_ffmpeg_exe()
+
+
+FFMPEG = achar_ffmpeg()
 GROQ_API_KEY = os.environ.get("GROQ_API_KEY")
 
 
@@ -442,7 +454,7 @@ def narrar(roteiro, pasta, mp3_final):
             print(f"Gemini sem cota: fala {i} ({voz}) com Edge-TTS.")
             mp3 = os.path.join(pasta, f"edge_{i:02d}.mp3")
             tts_edge(bloco, mp3, voz)
-            subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", mp3, "-ac", "1", "-ar", "24000",
+            subprocess.run([FFMPEG, "-y", "-loglevel", "error", "-i", mp3, "-ac", "1", "-ar", "24000",
                             "-c:a", "pcm_s16le", wav], check=True)
         partes.append(wav)
 
@@ -462,7 +474,7 @@ def narrar(roteiro, pasta, mp3_final):
     with open(lista, "w", encoding="utf-8") as f:
         for p in partes:
             f.write(f"file '{os.path.abspath(p).replace(os.sep, '/')}'\n")
-    cmd = ["ffmpeg", "-y", "-loglevel", "error", "-f", "concat", "-safe", "0", "-i", lista,
+    cmd = [FFMPEG, "-y", "-loglevel", "error", "-f", "concat", "-safe", "0", "-i", lista,
            "-af", "loudnorm=I=-16:TP=-1.5:LRA=11,apad=pad_dur=2.5", "-ac", "1", "-ar", "44100",
            "-c:a", "libmp3lame", "-b:a", "96k", mp3_final]
     subprocess.run(cmd, check=True)  # apad: 2,5 s de silêncio no fim, nada de corte seco
@@ -470,9 +482,10 @@ def narrar(roteiro, pasta, mp3_final):
 
 
 def duracao_segundos(caminho):
-    out = subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", caminho],
-                         capture_output=True, text=True).stdout.strip()
-    return int(float(out or 0))
+    # Sem ffprobe (o ffmpeg do pip não traz): lê o "Duration:" que o próprio ffmpeg imprime.
+    err = subprocess.run([FFMPEG, "-hide_banner", "-i", caminho], capture_output=True, text=True).stderr
+    m = re.search(r"Duration: (\d+):(\d+):(\d+(?:\.\d+)?)", err)
+    return int(int(m.group(1)) * 3600 + int(m.group(2)) * 60 + float(m.group(3))) if m else 0
 
 
 # ---------------------------------------------------------------- feed RSS
