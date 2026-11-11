@@ -44,5 +44,51 @@
   "duracao": 541,
   "guid": "cafe-com-tokens-ep0001",
   "pub_date": "Tue, 10 Nov 2026 17:15:07 -0300"
+ },
+ {
+  "numero": 2,
+  "data": "2026-11-11",
+  "titulo": "Nvidia em crise de espionagem e o fim dos freelancers com Anthropic",
+  "resumo": "O escândalo de espionagem que pode derrubar o rei da IA, o salto assustador da Anthropic que já faz o trabalho de 41% dos freelancers e robôs da Google montando carros da Mercedes.",
+  "noticias": [
+   {
+    "titulo": "Crise na Nvidia: Jensen Huang sob mira por suposto caso de espionagem",
+    "fonte": "The Verge",
+    "link": "https://www.theverge.com/ai-artificial-intelligence/1031063/jensen-huang-ai-race-us-china-spy"
+   },
+   {
+    "titulo": "Anthropic Fable 5.2: IA já resolve 41% dos trabalhos freelancers reais",
+    "fonte": "The Decoder",
+    "link": "https://the-decoder.com/anthropics-fable-5-2-completes-41-percent-of-real-freelance-jobs-up-from-2-5-percent-a-year-ago/"
+   },
+   {
+    "titulo": "Google lança Gemini 4 Carbon com sistema de enxame de agentes",
+    "fonte": "The Verge",
+    "link": "https://www.theverge.com/ai-artificial-intelligence/1030787/google-gemini-4-carbon-public-rollout"
+   },
+   {
+    "titulo": "Google DeepMind: Robôs com Gemini 2.5 atingem 96% de precisão na Mercedes",
+    "fonte": "The Decoder",
+    "link": "https://the-decoder.com/google-deepminds-gemini-robotics-2-5-scores-96-percent-sorting-metal-parts-in-a-mercedes-benz-assembly-pilot/"
+   },
+   {
+    "titulo": "OpenAI transforma ChatGPT em diretório de negócios com agentes de venda",
+    "fonte": "The Decoder",
+    "link": "https://the-decoder.com/openai-turns-chatgpt-into-a-business-directory-with-ai-agents-that-handle-customer-questions/"
+   },
+   {
+    "titulo": "Oura adquire startup de saúde por US$ 625 milhões para criar médico de IA",
+    "fonte": "TechCrunch",
+    "link": "https://techcrunch.com/2026/11/10/oura-to-acquire-ai-native-primary-care-startup-counsel-health-for-625m/"
+   }
+  ],
+  "descricao_html": "<p>O escândalo de espionagem que pode derrubar o rei da IA, o salto assustador da Anthropic que já faz o trabalho de 41% dos freelancers e robôs da Google montando carros da Mercedes.</p><p><strong>As notícias de hoje:</strong></p><ul><li><a href=\"https://www.theverge.com/ai-artificial-intelligence/1031063/jensen-huang-ai-race-us-china-spy\">Crise na Nvidia: Jensen Huang sob mira por suposto caso de espionagem</a> (The Verge)</li><li><a href=\"https://the-decoder.com/anthropics-fable-5-2-completes-41-percent-of-real-freelance-jobs-up-from-2-5-percent-a-year-ago/\">Anthropic Fable 5.2: IA já resolve 41% dos trabalhos freelancers reais</a> (The Decoder)</li><li><a href=\"https://www.theverge.com/ai-artificial-intelligence/1030787/google-gemini-4-carbon-public-rollout\">Google lança Gemini 4 Carbon com sistema de enxame de agentes</a> (The Verge)</li><li><a href=\"https://the-decoder.com/google-deepminds-gemini-robotics-2-5-scores-96-percent-sorting-metal-parts-in-a-mercedes-benz-assembly-pilot/\">Google DeepMind: Robôs com Gemini 2.5 atingem 96% de precisão na Mercedes</a> (The Decoder)</li><li><a href=\"https://the-decoder.com/openai-turns-chatgpt-into-a-business-directory-with-ai-agents-that-handle-customer-questions/\">OpenAI transforma ChatGPT em diretório de negócios com agentes de venda</a> (The Decoder)</li><li><a href=\"https://techcrunch.com/2026/11/10/oura-to-acquire-ai-native-primary-care-startup-counsel-health-for-625m/\">Oura adquire startup de saúde por US$ 625 milhões para criar médico de IA</a> (TechCrunch)</li></ul><p>Café com Tokens: IA todo dia, direto ao ponto. Episódio novo toda manhã.</p>",
+  "arquivo": "cafe-com-tokens-2026-11-11.mp3",
+  "tag": "ep0002",
+  "url": "https://github.com/mrcluty/cafe-com-tokens/releases/download/ep0002/cafe-com-tokens-2026-11-11.mp3",
+  "bytes": 6456259,
+  "duracao": 537,
+  "guid": "cafe-com-tokens-ep0002",
+  "pub_date": "Wed, 11 Nov 2026 07:26:04 -0300"
  }
 ]
