@@ -7,6 +7,11 @@ on:
     - cron: '53 8 * * *'  # 05:53 BRT: reserva, so roda se a principal falhou
     - cron: '23 9 * * *'  # 06:23 BRT: segunda reserva
   workflow_dispatch: # Rodar na mao: aba Actions > Episodio diario > Run workflow
+    inputs:
+      automatico:
+        description: 'Disparo automatico (cron-job.org): pula se o episodio de hoje ja saiu'
+        type: boolean
+        default: false
 
 permissions:
   contents: write # salvar historico, feed e criar o Release com o MP3
@@ -37,6 +42,7 @@ jobs:
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          AUTOMATICO: ${{ inputs.automatico }}
         run: python main.py
 
       - name: Publicar MP3 no Releases

@@ -530,7 +530,7 @@ def main():
         return
 
     hoje = agora_brt().date().isoformat()
-    if not teste and os.environ.get("GITHUB_EVENT_NAME") == "schedule" and os.path.exists(ULTIMO_PATH):
+    if not teste and (os.environ.get("GITHUB_EVENT_NAME") == "schedule" or os.environ.get("AUTOMATICO") == "true") and os.path.exists(ULTIMO_PATH):
         if open(ULTIMO_PATH, encoding="utf-8").read().strip() == hoje:
             print("Episódio de hoje já saiu. Rodada de reserva encerrada.")
             return
