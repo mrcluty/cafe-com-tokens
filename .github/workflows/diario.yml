@@ -27,6 +27,7 @@ concurrency:
 jobs:
   episodio:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v5
         with:
@@ -37,6 +38,7 @@ jobs:
           python-version: '3.11'
 
       - name: Instalar ffmpeg e dependencias
+        timeout-minutes: 8 # ja travou 16 min no apt; se travar, cai e a reserva das 02:30 roda
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
           pip install -r requirements.txt
