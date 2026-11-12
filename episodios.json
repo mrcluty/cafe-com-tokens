@@ -90,5 +90,51 @@
   "duracao": 1045,
   "guid": "cafe-com-tokens-ep0002",
   "pub_date": "Wed, 11 Nov 2026 07:26:04 -0300"
+ },
+ {
+  "numero": 3,
+  "data": "2026-11-12",
+  "titulo": "Nvidia em chamas: o fim da era Jensen Huang e a revolta da Anthropic",
+  "resumo": "O escândalo de espionagem na Nvidia pode derrubar Jensen Huang, enquanto a Anthropic usa IA para quebrar o monopólio dos chips. Entenda como o Google Gemini Decisions e a United Airlines estão mudando sua rotina e o futuro da tecnologia.",
+  "noticias": [
+   {
+    "titulo": "Crise na Nvidia: Jensen Huang pode ser demitido após escândalo",
+    "fonte": "The Verge",
+    "link": "https://www.theverge.com/tech/1031652/jensen-huang-rumor"
+   },
+   {
+    "titulo": "Anthropic usa IA para quebrar o monopólio da CUDA da Nvidia",
+    "fonte": "The Decoder",
+    "link": "https://the-decoder.com/anthropic-says-ai-is-eroding-nvidias-cuda-lead-cutting-an-amd-chip-switch-from-months-to-three-days/"
+   },
+   {
+    "titulo": "TSMC investe 1 bilhão de dólares na OpenAI e Anthropic",
+    "fonte": "Ars Technica",
+    "link": "https://arstechnica.com/ai/2026/11/taiwans-chipmaking-giant-tsmc-to-invest-1b-in-anthropic-openai/"
+   },
+   {
+    "titulo": "Google lança Gemini Decisions API para decisões em milissegundos",
+    "fonte": "The Decoder",
+    "link": "https://the-decoder.com/google-joins-the-decision-model-wave-with-gemini-decision-1-scoring-1000-questions-in-a-single-pass/"
+   },
+   {
+    "titulo": "United Airlines bloqueia agentes de IA em reservas de voos",
+    "fonte": "The Verge",
+    "link": "https://www.theverge.com/ai-artificial-intelligence/1031623/united-unauthorized-ai-agents"
+   },
+   {
+    "titulo": "AlphaProof da Google DeepMind verifica segurança do Signal",
+    "fonte": "The Decoder",
+    "link": "https://the-decoder.com/google-deepminds-alpha-proof-code-verified-signals-cryptographic-core-in-four-weeks-instead-of-years/"
+   }
+  ],
+  "descricao_html": "<p>O escândalo de espionagem na Nvidia pode derrubar Jensen Huang, enquanto a Anthropic usa IA para quebrar o monopólio dos chips. Entenda como o Google Gemini Decisions e a United Airlines estão mudando sua rotina e o futuro da tecnologia.</p><p><strong>As notícias de hoje:</strong></p><ul><li><a href=\"https://www.theverge.com/tech/1031652/jensen-huang-rumor\">Crise na Nvidia: Jensen Huang pode ser demitido após escândalo</a> (The Verge)</li><li><a href=\"https://the-decoder.com/anthropic-says-ai-is-eroding-nvidias-cuda-lead-cutting-an-amd-chip-switch-from-months-to-three-days/\">Anthropic usa IA para quebrar o monopólio da CUDA da Nvidia</a> (The Decoder)</li><li><a href=\"https://arstechnica.com/ai/2026/11/taiwans-chipmaking-giant-tsmc-to-invest-1b-in-anthropic-openai/\">TSMC investe 1 bilhão de dólares na OpenAI e Anthropic</a> (Ars Technica)</li><li><a href=\"https://the-decoder.com/google-joins-the-decision-model-wave-with-gemini-decision-1-scoring-1000-questions-in-a-single-pass/\">Google lança Gemini Decisions API para decisões em milissegundos</a> (The Decoder)</li><li><a href=\"https://www.theverge.com/ai-artificial-intelligence/1031623/united-unauthorized-ai-agents\">United Airlines bloqueia agentes de IA em reservas de voos</a> (The Verge)</li><li><a href=\"https://the-decoder.com/google-deepminds-alpha-proof-code-verified-signals-cryptographic-core-in-four-weeks-instead-of-years/\">AlphaProof da Google DeepMind verifica segurança do Signal</a> (The Decoder)</li></ul><p>Café com Tokens: as notícias de inteligência artificial (IA) do dia em uns 15 minutos, em português, com bom humor e explicadas de um jeito simples. ChatGPT, OpenAI, Google Gemini, Claude, Anthropic, Meta, Nvidia e as startups que mexem no jogo. Episódio novo toda manhã, às 6h. Siga o podcast para ouvir o próximo.</p>",
+  "arquivo": "cafe-com-tokens-2026-11-12.mp3",
+  "tag": "ep0003",
+  "url": "https://github.com/mrcluty/cafe-com-tokens/releases/download/ep0003/cafe-com-tokens-2026-11-12.mp3",
+  "bytes": 10205039,
+  "duracao": 850,
+  "guid": "cafe-com-tokens-ep0003",
+  "pub_date": "Thu, 12 Nov 2026 00:36:57 -0300"
  }
 ]
