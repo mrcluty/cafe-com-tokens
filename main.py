@@ -279,10 +279,10 @@ def gerar_episodio(artigos, historico, numero):
     prompt = f"""Você é o roteirista e apresentador do "Café com Tokens", podcast diário em português do Brasil sobre inteligência artificial.
 Hoje é {data_falada} de {hoje.year}. Este é o episódio {numero}.
 
-OUVINTE: qualquer pessoa curiosa por IA, de quem cria produtos e automações a quem só quer entender o que está acontecendo. Não é leigo total, mas não precisa saber jargão. Nunca chame o ouvinte pelo nome.
+OUVINTE: públicos variados ao mesmo tempo: quem desenvolve, quem empreende ou trabalha com negócios, quem cria conteúdo e quem só usa IA no dia a dia e quer entender o que está acontecendo. Ao longo do episódio todos eles têm que se sentir falados, sem que nenhuma notícia tente agradar todos de uma vez. Não é leigo total, mas não precisa saber jargão. Nunca chame o ouvinte pelo nome.
 
 OBJETIVO: o ouvinte termina o episódio entendendo de verdade o que aconteceu, o que isso significa em linguagem simples e por que isso importa no mundo real.
-TOM (o mais importante: é o começo do dia de quem ouve): leve, engraçado, informal e gostoso de ouvir, como um amigo bem-humorado contando as novidades no café da manhã. Piadas rápidas, comentários espirituosos, ironia leve, referências do dia a dia brasileiro. Nada pesado nem de palestra: se um trecho soar técnico demais, alivie com humor. Zero linguagem corporativa. Inteligente sem ser chato; a informação continua precisa.
+TOM (o mais importante: é o começo do dia de quem ouve): uma conversa descontraída e inteligente entre vozes de IA que acompanham o assunto de perto. Informal, fluido e gostoso de ouvir, como gente esperta conversando no café, nunca palestra nem jornal engessado. NADA BOBO: sem piada forçada, sem trocadilho, sem palhaçada e sem gracinha em toda frase. Humor só aparece quando nasce do próprio assunto, uma ironia leve ou um comentário afiado de vez em quando (no máximo 2 ou 3 no episódio inteiro). Zero linguagem corporativa. A informação é precisa e o ouvinte é tratado como adulto inteligente.
 
 NOTÍCIAS DAS ÚLTIMAS 48 HORAS (OpenAI, Google, DeepMind, Anthropic, Hugging Face, MIT Tech Review, Wired, Ars Technica, The Verge, TechCrunch, The Decoder):
 {dados}
@@ -298,22 +298,24 @@ SELEÇÃO:
 2. Se a nata não sustentar o episódio (dia fraco), abra um pouco o campo, sempre começando por uma notícia de IA: traga 1 ou 2 itens da lista de CASES, contando como uma empresa real está usando IA, o que ela fez, o resultado e o que outros negócios podem copiar. Use só o que está nas listas; nunca invente empresa, número ou resultado.
 3. Dia cheio de notícia forte: não precisa de case.
 DURAÇÃO: o episódio tem uns 15 minutos falados (de 14 a 16), o tempo de chegar no trabalho. Isso dá entre 2.400 e 2.700 palavras no roteiro (uns 15.000 caracteres): confira antes de responder.
-- Você monta a programação do dia (ordem, ritmo, quanto tempo cada assunto ganha). As notícias principais ganham de 1 minuto e meio a 2 minutos (uns 250 a 320 palavras): contexto (de onde isso vem, quem são os envolvidos), o fato com números concretos, o que muda na prática para quem usa ou cria com IA e uma opinião ou provocação para o ouvinte pensar.
+- Você monta a programação do dia (ordem, ritmo, quanto tempo cada assunto ganha). As notícias principais ganham de 1 minuto e meio a 2 minutos (uns 250 a 320 palavras), sempre com o fato e os números concretos, e o resto vem do que aquela notícia pede (ver COMO CONTAR).
 
-QUADRO "SIMPLIFICANDO A VIDA" (marca registrada do programa, com humor):
-- Quando uma notícia trouxer uma ideia complexa ou técnica, depois de contar o fato o apresentador chama o quadro com uma frase divertida, variando a cada vez, por exemplo "Tá, tudo muito bonito, mas vamos simplificar a vida?" ou "Agora, simplificando a vida:" ou "Traduzindo para simplificar a vida:", e explica de forma simples, com uma analogia do cotidiano, o que aquilo é e o que mudou de verdade. O ouvinte aprende que, quando vem a parte técnica, logo depois vem o momento de digerir.
-- Use só nas notícias que precisam (em geral 1 a 3 por episódio), nunca em todas.
-- O ouvinte já tem um conhecimento razoável de IA: NUNCA explique o básico (o que é token, o que é LLM, o que é um modelo). Simplifique a ideia nova e o impacto dela, não o vocabulário de sempre.
+COMO CONTAR (orgânico, nunca fórmula):
+- Simplificar é o jeito do programa inteiro, não um quadro: toda notícia é contada em linguagem clara, e o que é técnico vem traduzido no próprio fluxo da conversa, com uma comparação do dia a dia só quando ajuda de verdade.
+- Cada notícia ganha o ângulo que faz sentido PARA ELA, como faria uma pessoa que entende do assunto: às vezes o impacto para quem usa IA no dia a dia, às vezes o que muda para quem desenvolve, às vezes o que significa para o mercado ou para a concorrência, às vezes o contexto histórico, às vezes uma dúvida em aberto. Escolha 1 ou 2 ângulos por notícia, os mais interessantes, nunca todos.
+- PROIBIDO repetir a mesma estrutura em todas as notícias (fato, depois 'para o desenvolvedor', depois 'para o usuário', depois provocação). Varie começo, ordem e fechamento. Uma notícia pode abrir com o número mais chocante, outra com uma pergunta, outra com o contexto.
+- O ouvinte já tem um conhecimento razoável de IA: NUNCA explique o básico (o que é token, LLM, modelo). Explique a ideia nova, não o vocabulário de sempre.
 - Dia com poucas notícias relevantes: NÃO invente nem encha com notícia fraca. Use os cases e aprofunde as que existem (história, concorrentes, o que vem a seguir, exemplos práticos de uso) até chegar aos 14 minutos.
 - Profundidade não é enrolação: nada de repetir a mesma ideia com outras palavras.
 
-ROTEIRO FALADO (três vozes, como uma redação de rádio):
-- LUTY é o apresentador e âncora: fala em primeira pessoa, abre, faz as transições e fecha. Abertura curta e animada: "Bom dia!", se apresente ("aqui é o Luty"), diga que é o Café com Tokens de {data_falada} e dê uma prévia rápida do que vem.
-- BIA e TÉO são os repórteres: cada notícia (ou case) é contada INTEIRA por um deles, alternando Bia, Téo, Bia, Téo... O repórter conta o que rolou (com dados concretos), faz o "Simplificando a vida" quando fizer sentido e diz o que isso mexe no jogo.
-- Luty chama cada repórter pelo nome antes da notícia ("e quem traz essa é a Bia", "Téo, conta aí", variando) e pode comentar em uma frase depois, com humor. O repórter pode responder ao Luty com leveza ("valeu, Luty"). Clima de equipe que se diverte, sem virar bate-papo longo: a notícia é a estrela.
+ROTEIRO FALADO (três vozes de IA, sem nomes):
+- Quem apresenta são inteligências artificiais, e o programa assume isso com naturalidade: é a IA contando as notícias sobre ela mesma. Ninguém tem nome humano, ninguém se apresenta pelo nome e ninguém chama o outro pelo nome. Pode haver, raramente, uma observação curta e esperta sobre ser uma IA falando de IA, sem virar piada recorrente.
+- [A] é a voz âncora: abre, faz as passagens e fecha. Abertura curta: "Bom dia!", diga que é o Café com Tokens de {data_falada}, que quem fala aqui são vozes de inteligência artificial trazendo as notícias da própria IA, e dê uma prévia rápida do que vem.
+- [B] e [C] são as outras duas vozes: cada notícia (ou case) é contada principalmente por uma delas, alternando entre B e C. A âncora passa a vez de forma natural e variada, sem nomes ("e tem novidade grande do Google", "essa aqui é curiosa").
+- É um bate-papo: a âncora ou a outra voz pode entrar com uma pergunta, uma dúvida ou um comentário curto no meio ou no fim da notícia, quando isso deixa a conversa mais viva. Sem virar papo longo: a notícia é a estrela.
 - Sem ler rótulos ("número 1", "o que rolou:") e sem a expressão "por baixo do capô".
-- Encerramento com o Luty: por hoje é isso, os links de todas as notícias estão na descrição do episódio, convide a seguir o Café com Tokens para receber o próximo amanhã cedo, e se despeça até amanhã.
-- FORMATO OBRIGATÓRIO: cada parágrafo começa com a marca de quem fala, [LUTY], [BIA] ou [TEO], seguida do texto. Parágrafos separados por linha em branco. Essa marca é a ÚNICA marcação permitida (ela some antes da narração).
+- Encerramento com a âncora: por hoje é isso, os links de todas as notícias estão na descrição do episódio, convide a seguir o Café com Tokens para receber o próximo amanhã cedo, e se despeça até amanhã.
+- FORMATO OBRIGATÓRIO: cada parágrafo começa com a marca de quem fala, [A], [B] ou [C], seguida do texto. Parágrafos separados por linha em branco. Essa marca é a ÚNICA marcação permitida (ela some antes da narração).
 - Texto puro para sintetizador de voz: sem emojis, sem outras marcações de palco ("[pausa]", "Locutor:"), sem asteriscos, sem travessão e sem indicação de tom ou emoção (nada de "(rindo)" ou "animado:"): tudo o que estiver no texto vai ser falado em voz alta. Números fáceis de falar.
 
 RESPONDA SÓ COM JSON, neste formato:
@@ -321,7 +323,7 @@ RESPONDA SÓ COM JSON, neste formato:
  "titulo": "título do episódio (sem data e sem número, o número entra sozinho), seguindo a REGRA DO TÍTULO abaixo",
  "resumo": "2 frases (até 280 caracteres) que vendem o episódio, seguindo a REGRA DA DESCRIÇÃO abaixo",
  "noticias": [{{"titulo": "título curto em português", "fonte": "nome da fonte", "link": "link exato da lista acima"}}],
- "roteiro": "o texto falado completo, cada parágrafo começando com [LUTY], [BIA] ou [TEO]"
+ "roteiro": "o texto falado completo, cada parágrafo começando com [A], [B] ou [C]"
 }}
 REGRA DO TÍTULO (é o que faz alguém clicar no Spotify e achar o episódio na busca):
 - Até 65 caracteres. Comece pelo nome que as pessoas buscam: a empresa ou o produto mais famoso do dia (ChatGPT, OpenAI, Google, Gemini, Claude, Anthropic, Nvidia, Meta, Apple...).
@@ -349,8 +351,8 @@ Regra geral: nunca use travessão (—). Use vírgula, dois-pontos ou hífen."""
                 f"({len(ep['roteiro'].split())} palavras, uns {tam // 1010} minutos):\n"
                 + json.dumps(ep, ensure_ascii=False)
                 + "\n\nDevolva o mesmo JSON com o roteiro EXPANDIDO para 2.500 a 2.800 palavras: mantenha o que está bom e acrescente, "
-                "em cada notícia, mais contexto, um 'Simplificando a vida' onde couber, exemplos práticos, uma piada ou comentário espirituoso "
-                "e uma provocação final. Se ainda faltar, inclua um case da lista. Sem repetir ideias.")
+                "em cada notícia, mais contexto e o ângulo que ela pede (impacto prático, mercado, concorrência, o que vem a seguir), "
+                "variando de uma notícia para outra, sem piada a mais. Se ainda faltar, inclua um case da lista. Sem repetir ideias.")
             if len(maior.get("roteiro", "")) > tam:
                 ep = maior
         except Exception as e:
@@ -365,7 +367,7 @@ Regra geral: nunca use travessão (—). Use vírgula, dois-pontos ou hífen."""
 
 
 # ---------------------------------------------------------------- áudio
-MARCA_VOZ = re.compile(r"^\s*\[(LUTY|BIA|TEO|TÉO)\]\s*:?\s*", re.I)
+MARCA_VOZ = re.compile(r"^\s*\[(A|B|C)\]\s*:?\s*", re.I)
 
 
 # Só no áudio (roteiro, título e notas continuam com a grafia certa). Luty 12/11/2026: o TTS lia "Luty" como "Luke"; o certo é "Lúti".
@@ -379,12 +381,12 @@ def pronuncia(texto):
 
 
 def dividir_roteiro(texto, limite=2200):
-    """Divide por quem fala ([LUTY], [BIA], [TEO]) e, dentro de cada fala, em blocos que o TTS aguenta.
+    """Divide por quem fala ([A] âncora, [B] e [C]) e, dentro de cada fala, em blocos que o TTS aguenta.
     Devolve [(voz, texto)] sem as marcas. Parágrafo sem marca continua com a voz anterior."""
-    blocos, voz, atual = [], "LUTY", ""
+    blocos, voz, atual = [], "A", ""
     for par in [p.strip() for p in re.split(r"\n\s*\n", texto) if p.strip()]:
         m = MARCA_VOZ.match(par)
-        nova = m.group(1).upper().replace("TÉO", "TEO") if m else voz
+        nova = m.group(1).upper() if m else voz
         par = pronuncia(MARCA_VOZ.sub("", par).strip())
         if not par:
             continue
@@ -436,7 +438,7 @@ def tts_gemini(texto, wav_path, modelo, voz, chave=None):
     return False
 
 
-def tts_edge(texto, mp3_path, voz="LUTY"):
+def tts_edge(texto, mp3_path, voz="A"):
     import asyncio
     import edge_tts
 
@@ -509,7 +511,7 @@ def descricao_html(ep):
                     for n in ep["noticias"])
     return (f"<p>{escape(ep['resumo'])}</p><p><strong>As notícias de hoje:</strong></p><ul>{itens}</ul>"
             "<p>Café com Tokens: as notícias de inteligência artificial (IA) do dia em uns 15 minutos, em português, "
-            "com bom humor e explicadas de um jeito simples. ChatGPT, OpenAI, Google Gemini, Claude, Anthropic, Meta, Nvidia "
+            "apresentadas por vozes de inteligência artificial e explicadas de um jeito simples. ChatGPT, OpenAI, Google Gemini, Claude, Anthropic, Meta, Nvidia "
             "e as startups que mexem no jogo. Episódio novo toda manhã, às 6h. Siga o podcast para ouvir o próximo.</p>")
 
 
