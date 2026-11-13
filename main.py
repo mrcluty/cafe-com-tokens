@@ -310,7 +310,7 @@ COMO CONTAR (orgânico, nunca fórmula):
 
 ROTEIRO FALADO (três vozes de IA, sem nomes):
 - Quem apresenta são inteligências artificiais, e o programa assume isso com naturalidade: é a IA contando as notícias sobre ela mesma. Ninguém tem nome humano, ninguém se apresenta pelo nome e ninguém chama o outro pelo nome. Pode haver, raramente, uma observação curta e esperta sobre ser uma IA falando de IA, sem virar piada recorrente.
-- [A] é a voz âncora: abre, faz as passagens e fecha. Abertura curta: "Bom dia!", diga que é o Café com Tokens de {data_falada}, que quem fala aqui são vozes de inteligência artificial trazendo as notícias da própria IA, e dê uma prévia rápida do que vem.
+- [A] é a voz âncora: abre, faz as passagens e fecha. Abertura curta: "Bom dia!", diga que é o Café com Tokens de {data_falada} e apresente a ideia do programa: aqui quem fala é a própria inteligência artificial, contando as notícias sobre ela mesma, o que andam falando dela por aí. Diga isso com naturalidade e um toque esperto, com palavras diferentes a cada episódio (nunca a mesma frase de sempre), em uma ou duas frases. Depois dê uma prévia rápida do que vem.
 - [B] e [C] são as outras duas vozes: cada notícia (ou case) é contada principalmente por uma delas, alternando entre B e C. A âncora passa a vez de forma natural e variada, sem nomes ("e tem novidade grande do Google", "essa aqui é curiosa").
 - É um bate-papo: a âncora ou a outra voz pode entrar com uma pergunta, uma dúvida ou um comentário curto no meio ou no fim da notícia, quando isso deixa a conversa mais viva. Sem virar papo longo: a notícia é a estrela.
 - Sem ler rótulos ("número 1", "o que rolou:") e sem a expressão "por baixo do capô".
@@ -455,11 +455,12 @@ def narrar(roteiro, pasta, mp3_final):
     """Narra fala a fala (cada pessoa com a sua voz) e junta tudo num MP3 de podcast (mono, 96 kbps, volume normalizado)."""
     os.makedirs(pasta, exist_ok=True)
     blocos = dividir_roteiro(roteiro)
-    # Cadeia (chave, modelo): primeiro todos os modelos na chave do podcast, depois na chave reserva.
+    # Cadeia (modelo, chave): o mesmo modelo nas 2 chaves antes de trocar de modelo, porque trocar de modelo muda o timbre
+    # (Luty 13/11/2026: no #4 a troca de modelo apareceu no áudio).
     # Nunca recomeça do zero (isso queimava a cota do dia): a fala que falha passa para o próximo da cadeia
     # e o que já foi narrado fica. Como cada notícia é de uma pessoa, a troca de modelo quase não aparece.
     chaves = [k for k in (GEMINI_API_KEY, os.environ.get("GEMINI_API_KEY_2")) if k]
-    cadeia = [(k, m) for k in chaves for m in MODELOS_TTS]
+    cadeia = [(k, m) for m in MODELOS_TTS for k in chaves]
     pos, partes = 0, []
     for i, (voz, bloco) in enumerate(blocos):
         wav = os.path.join(pasta, f"parte_{i:02d}.wav")
