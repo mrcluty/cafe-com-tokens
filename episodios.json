@@ -136,5 +136,56 @@
   "duracao": 774,
   "guid": "cafe-com-tokens-ep0003",
   "pub_date": "Thu, 12 Nov 2026 00:36:57 -0300"
+ },
+ {
+  "numero": 4,
+  "data": "2026-11-13",
+  "titulo": "Nvidia em queda livre e o salto do Gemini 4 Hydrogen",
+  "resumo": "Jensen Huang renuncia à Nvidia em meio a escândalo de espionagem e perda de 1,4 trilhão de dólares. Google lança Gemini 4 Hydrogen, superando o próprio topo de linha em tempo recorde, enquanto Anthropic inicia seu IPO.",
+  "noticias": [
+   {
+    "titulo": "Jensen Huang renuncia ao cargo de CEO da Nvidia após escândalo",
+    "fonte": "The Decoder",
+    "link": "https://the-decoder.com/jensen-huang-resigns-as-nvidia-ceo-after-espionage-scandal-wipes-out-1-4-trillion-in-market-value/"
+   },
+   {
+    "titulo": "Google lança Gemini 4 Hydrogen e supera modelos maiores",
+    "fonte": "The Decoder",
+    "link": "https://the-decoder.com/googles-gemini-4-hydrogen-outscores-the-bigger-argon-just-four-weeks-after-its-launch/"
+   },
+   {
+    "titulo": "Anthropic inicia roadshow para sua oferta pública inicial",
+    "fonte": "Anthropic",
+    "link": "https://www.anthropic.com/news/roadshow-launch"
+   },
+   {
+    "titulo": "OpenAI revela que modelos de fronteira estão escondendo pensamentos",
+    "fonte": "The Decoder",
+    "link": "https://the-decoder.com/openais-data-suggests-that-frontier-models-are-hiding-their-thoughts-because-developers-optimize-for-capability-and-compute/"
+   },
+   {
+    "titulo": "Claude Meetings permite que IA participe de chamadas de vídeo",
+    "fonte": "The Decoder",
+    "link": "https://the-decoder.com/claude-meetings-lets-anthropics-ai-join-your-video-calls/"
+   },
+   {
+    "titulo": "DeepMind apresenta AlphaGenome 2 para decifrar o DNA",
+    "fonte": "Google DeepMind",
+    "link": "https://deepmind.google/blog/alphagenome-2-deciphering-how-cells-read-dna-to-better-understand-disease/"
+   },
+   {
+    "titulo": "ElevenLabs lança Scribe v3 para transcrição em tempo real",
+    "fonte": "The Decoder",
+    "link": "https://the-decoder.com/elevenlabs-scribe-v3-live-uses-conversational-context-to-stop-voice-agents-from-cutting-off-callers-mid-sentence/"
+   }
+  ],
+  "descricao_html": "<p>Jensen Huang renuncia à Nvidia em meio a escândalo de espionagem e perda de 1,4 trilhão de dólares. Google lança Gemini 4 Hydrogen, superando o próprio topo de linha em tempo recorde, enquanto Anthropic inicia seu IPO.</p><p><strong>As notícias de hoje:</strong></p><ul><li><a href=\"https://the-decoder.com/jensen-huang-resigns-as-nvidia-ceo-after-espionage-scandal-wipes-out-1-4-trillion-in-market-value/\">Jensen Huang renuncia ao cargo de CEO da Nvidia após escândalo</a> (The Decoder)</li><li><a href=\"https://the-decoder.com/googles-gemini-4-hydrogen-outscores-the-bigger-argon-just-four-weeks-after-its-launch/\">Google lança Gemini 4 Hydrogen e supera modelos maiores</a> (The Decoder)</li><li><a href=\"https://www.anthropic.com/news/roadshow-launch\">Anthropic inicia roadshow para sua oferta pública inicial</a> (Anthropic)</li><li><a href=\"https://the-decoder.com/openais-data-suggests-that-frontier-models-are-hiding-their-thoughts-because-developers-optimize-for-capability-and-compute/\">OpenAI revela que modelos de fronteira estão escondendo pensamentos</a> (The Decoder)</li><li><a href=\"https://the-decoder.com/claude-meetings-lets-anthropics-ai-join-your-video-calls/\">Claude Meetings permite que IA participe de chamadas de vídeo</a> (The Decoder)</li><li><a href=\"https://deepmind.google/blog/alphagenome-2-deciphering-how-cells-read-dna-to-better-understand-disease/\">DeepMind apresenta AlphaGenome 2 para decifrar o DNA</a> (Google DeepMind)</li><li><a href=\"https://the-decoder.com/elevenlabs-scribe-v3-live-uses-conversational-context-to-stop-voice-agents-from-cutting-off-callers-mid-sentence/\">ElevenLabs lança Scribe v3 para transcrição em tempo real</a> (The Decoder)</li></ul><p>Café com Tokens: as notícias de inteligência artificial (IA) do dia em uns 15 minutos, em português, apresentadas por vozes de inteligência artificial e explicadas de um jeito simples. ChatGPT, OpenAI, Google Gemini, Claude, Anthropic, Meta, Nvidia e as startups que mexem no jogo. Episódio novo toda manhã, às 6h. Siga o podcast para ouvir o próximo.</p>",
+  "arquivo": "cafe-com-tokens-2026-11-13.mp3",
+  "tag": "ep0004",
+  "url": "https://github.com/mrcluty/cafe-com-tokens/releases/download/ep0004/cafe-com-tokens-2026-11-13.mp3",
+  "bytes": 9296605,
+  "duracao": 774,
+  "guid": "cafe-com-tokens-ep0004",
+  "pub_date": "Fri, 13 Nov 2026 00:35:15 -0300"
  }
 ]
