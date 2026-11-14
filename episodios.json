@@ -187,5 +187,46 @@
   "duracao": 774,
   "guid": "cafe-com-tokens-ep0004",
   "pub_date": "Fri, 13 Nov 2026 00:35:15 -0300"
+ },
+ {
+  "numero": 5,
+  "data": "2026-11-14",
+  "titulo": "Nvidia: o fim da era Jensen Huang e o ChatGPT agora tem carteira",
+  "resumo": "Nvidia enfrenta crise histórica com a saída de Jensen Huang, enquanto a OpenAI lança o ChatGPT Wallet para permitir que agentes façam compras. Entenda como o Google Search mudou com o Gemini 4 Hydrogen.",
+  "noticias": [
+   {
+    "titulo": "Jensen Huang renuncia ao cargo de CEO da Nvidia",
+    "fonte": "The Verge",
+    "link": "https://www.theverge.com/ai-artificial-intelligence/1032339/lets-talk-about-the-nvidia-shitshow"
+   },
+   {
+    "titulo": "OpenAI lança ChatGPT Wallet para compras via agentes",
+    "fonte": "OpenAI",
+    "link": "https://openai.com/index/introducing-chatgpt-wallet"
+   },
+   {
+    "titulo": "Google Search recebe upgrade global com Gemini 4 Hydrogen",
+    "fonte": "Google AI",
+    "link": "https://blog.google/products-and-platforms/products/search/gemini-4-hydrogen-search-upgrade/"
+   },
+   {
+    "titulo": "Anthropic barra investidores chineses em seu IPO",
+    "fonte": "The Decoder",
+    "link": "https://the-decoder.com/banks-bar-chinese-and-hong-kong-investors-from-anthropic-ipo-over-us-export-controls/"
+   },
+   {
+    "titulo": "Llama.cpp chega à versão 1.0.0 fortalecendo IA local",
+    "fonte": "Hugging Face",
+    "link": "https://huggingface.co/blog/ggml-org/llama-cpp-v1"
+   }
+  ],
+  "descricao_html": "<p>Nvidia enfrenta crise histórica com a saída de Jensen Huang, enquanto a OpenAI lança o ChatGPT Wallet para permitir que agentes façam compras. Entenda como o Google Search mudou com o Gemini 4 Hydrogen.</p><p><strong>As notícias de hoje:</strong></p><ul><li><a href=\"https://www.theverge.com/ai-artificial-intelligence/1032339/lets-talk-about-the-nvidia-shitshow\">Jensen Huang renuncia ao cargo de CEO da Nvidia</a> (The Verge)</li><li><a href=\"https://openai.com/index/introducing-chatgpt-wallet\">OpenAI lança ChatGPT Wallet para compras via agentes</a> (OpenAI)</li><li><a href=\"https://blog.google/products-and-platforms/products/search/gemini-4-hydrogen-search-upgrade/\">Google Search recebe upgrade global com Gemini 4 Hydrogen</a> (Google AI)</li><li><a href=\"https://the-decoder.com/banks-bar-chinese-and-hong-kong-investors-from-anthropic-ipo-over-us-export-controls/\">Anthropic barra investidores chineses em seu IPO</a> (The Decoder)</li><li><a href=\"https://huggingface.co/blog/ggml-org/llama-cpp-v1\">Llama.cpp chega à versão 1.0.0 fortalecendo IA local</a> (Hugging Face)</li></ul><p>Café com Tokens: as notícias de inteligência artificial (IA) do dia em uns 15 minutos, em português, apresentadas por vozes de inteligência artificial e explicadas de um jeito simples. ChatGPT, OpenAI, Google Gemini, Claude, Anthropic, Meta, Nvidia e as startups que mexem no jogo. Episódio novo toda manhã, às 6h. Siga o podcast para ouvir o próximo.</p>",
+  "arquivo": "cafe-com-tokens-2026-11-14.mp3",
+  "tag": "ep0005",
+  "url": "https://github.com/mrcluty/cafe-com-tokens/releases/download/ep0005/cafe-com-tokens-2026-11-14.mp3",
+  "bytes": 10180902,
+  "duracao": 848,
+  "guid": "cafe-com-tokens-ep0005",
+  "pub_date": "Sat, 14 Nov 2026 00:36:35 -0300"
  }
 ]

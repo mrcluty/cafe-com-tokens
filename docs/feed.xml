@@ -20,7 +20,21 @@
     <itunes:category text="News"><itunes:category text="Tech News"/></itunes:category>
     <itunes:explicit>false</itunes:explicit>
     <itunes:type>episodic</itunes:type>
-    <lastBuildDate>Fri, 13 Nov 2026 00:35:15 -0300</lastBuildDate>
+    <lastBuildDate>Sat, 14 Nov 2026 00:36:35 -0300</lastBuildDate>
+    <item>
+      <title>Nvidia: o fim da era Jensen Huang e o ChatGPT agora tem carteira | #5</title>
+      <itunes:title>Nvidia: o fim da era Jensen Huang e o ChatGPT agora tem carteira</itunes:title>
+      <description><![CDATA[<p>Nvidia enfrenta crise histórica com a saída de Jensen Huang, enquanto a OpenAI lança o ChatGPT Wallet para permitir que agentes façam compras. Entenda como o Google Search mudou com o Gemini 4 Hydrogen.</p><p><strong>As notícias de hoje:</strong></p><ul><li><a href="https://www.theverge.com/ai-artificial-intelligence/1032339/lets-talk-about-the-nvidia-shitshow">Jensen Huang renuncia ao cargo de CEO da Nvidia</a> (The Verge)</li><li><a href="https://openai.com/index/introducing-chatgpt-wallet">OpenAI lança ChatGPT Wallet para compras via agentes</a> (OpenAI)</li><li><a href="https://blog.google/products-and-platforms/products/search/gemini-4-hydrogen-search-upgrade/">Google Search recebe upgrade global com Gemini 4 Hydrogen</a> (Google AI)</li><li><a href="https://the-decoder.com/banks-bar-chinese-and-hong-kong-investors-from-anthropic-ipo-over-us-export-controls/">Anthropic barra investidores chineses em seu IPO</a> (The Decoder)</li><li><a href="https://huggingface.co/blog/ggml-org/llama-cpp-v1">Llama.cpp chega à versão 1.0.0 fortalecendo IA local</a> (Hugging Face)</li></ul><p>Café com Tokens: as notícias de inteligência artificial (IA) do dia em uns 15 minutos, em português, apresentadas por vozes de inteligência artificial e explicadas de um jeito simples. ChatGPT, OpenAI, Google Gemini, Claude, Anthropic, Meta, Nvidia e as startups que mexem no jogo. Episódio novo toda manhã, às 6h. Siga o podcast para ouvir o próximo.</p>]]></description>
+      <content:encoded><![CDATA[<p>Nvidia enfrenta crise histórica com a saída de Jensen Huang, enquanto a OpenAI lança o ChatGPT Wallet para permitir que agentes façam compras. Entenda como o Google Search mudou com o Gemini 4 Hydrogen.</p><p><strong>As notícias de hoje:</strong></p><ul><li><a href="https://www.theverge.com/ai-artificial-intelligence/1032339/lets-talk-about-the-nvidia-shitshow">Jensen Huang renuncia ao cargo de CEO da Nvidia</a> (The Verge)</li><li><a href="https://openai.com/index/introducing-chatgpt-wallet">OpenAI lança ChatGPT Wallet para compras via agentes</a> (OpenAI)</li><li><a href="https://blog.google/products-and-platforms/products/search/gemini-4-hydrogen-search-upgrade/">Google Search recebe upgrade global com Gemini 4 Hydrogen</a> (Google AI)</li><li><a href="https://the-decoder.com/banks-bar-chinese-and-hong-kong-investors-from-anthropic-ipo-over-us-export-controls/">Anthropic barra investidores chineses em seu IPO</a> (The Decoder)</li><li><a href="https://huggingface.co/blog/ggml-org/llama-cpp-v1">Llama.cpp chega à versão 1.0.0 fortalecendo IA local</a> (Hugging Face)</li></ul><p>Café com Tokens: as notícias de inteligência artificial (IA) do dia em uns 15 minutos, em português, apresentadas por vozes de inteligência artificial e explicadas de um jeito simples. ChatGPT, OpenAI, Google Gemini, Claude, Anthropic, Meta, Nvidia e as startups que mexem no jogo. Episódio novo toda manhã, às 6h. Siga o podcast para ouvir o próximo.</p>]]></content:encoded>
+      <enclosure url="https://github.com/mrcluty/cafe-com-tokens/releases/download/ep0005/cafe-com-tokens-2026-11-14.mp3" length="10180902" type="audio/mpeg"/>
+      <guid isPermaLink="false">cafe-com-tokens-ep0005</guid>
+      <pubDate>Sat, 14 Nov 2026 00:36:35 -0300</pubDate>
+      <itunes:image href="https://mrcluty.github.io/cafe-com-tokens/capas/ep0005.jpg?v=3"/>
+      <itunes:duration>00:14:08</itunes:duration>
+      <itunes:episode>5</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
     <item>
       <title>Nvidia em queda livre e o salto do Gemini 4 Hydrogen | #4</title>
       <itunes:title>Nvidia em queda livre e o salto do Gemini 4 Hydrogen</itunes:title>

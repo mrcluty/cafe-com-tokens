@@ -118,5 +118,30 @@
   "data": "2026-11-13",
   "link": "https://www.anthropic.com/news/roadshow-launch",
   "titulo": "Anthropic launches roadshow for proposed initial public offering"
+ },
+ {
+  "data": "2026-11-14",
+  "link": "https://openai.com/index/introducing-chatgpt-wallet",
+  "titulo": "Introducing ChatGPT Wallet"
+ },
+ {
+  "data": "2026-11-14",
+  "link": "https://blog.google/products-and-platforms/products/search/gemini-4-hydrogen-search-upgrade",
+  "titulo": "Google Search gets a major upgrade with Gemini 4 Hydrogen"
+ },
+ {
+  "data": "2026-11-14",
+  "link": "https://huggingface.co/blog/ggml-org/llama-cpp-v1",
+  "titulo": "llama.cpp v1.0.0 : A stronger foundation for the local AI ecosystem"
+ },
+ {
+  "data": "2026-11-14",
+  "link": "https://www.theverge.com/ai-artificial-intelligence/1032339/lets-talk-about-the-nvidia-shitshow",
+  "titulo": "Let’s talk about Jensen Huang’s many affairs!"
+ },
+ {
+  "data": "2026-11-14",
+  "link": "https://the-decoder.com/banks-bar-chinese-and-hong-kong-investors-from-anthropic-ipo-over-us-export-controls",
+  "titulo": "Banks bar Chinese and Hong Kong investors from Anthropic IPO over US export controls"
  }
 ]
